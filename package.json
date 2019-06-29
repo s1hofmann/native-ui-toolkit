@@ -45,7 +45,7 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "compile": "npm run clean && tsc -p .",
+    "build": "npm run clean && tsc -p .",
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "tslint -p tsconfig.json",
@@ -56,11 +56,13 @@
   "dependencies": {
     "clipboardy": "2.0.0",
     "opencv4nodejs-prebuilt": "4.15.2",
-    "robotjs-node10": "0.5.4"
+    "robotjs-node10": "0.5.4",
+    "tesseract.js": "1.0.19"
   },
   "devDependencies": {
     "@types/clipboardy": "^1.1.0",
     "@types/jest": "^24.0.9",
+    "@types/node": "^12.0.10",
     "jest": "^24.7.1",
     "sneer": "^1.0.1",
     "ts-jest": "^24.0.2",
