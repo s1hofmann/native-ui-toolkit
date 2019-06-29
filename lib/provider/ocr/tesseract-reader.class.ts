@@ -4,7 +4,7 @@ import { TextReader } from "./text-reader.interface";
 
 export class TesseractReader implements TextReader {
 
-  private tesseractReader: Tesseract.TesseractStatic;
+  private tesseractReader: Tesseract.TesseractWorker;
 
   constructor(private readonly config: {
     workerPath: string,

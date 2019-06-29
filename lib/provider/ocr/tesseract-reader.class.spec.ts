@@ -12,11 +12,9 @@ describe("TesseractReader", () => {
     };
     const inputImage = await new ImageReader()
       .load(
-        join(__dirname, "../../../e2e/assets/ocr.png")
+        join(__dirname, "../../../e2e/assets/npm.png")
       );
-    const expected = `Hello World
-from beyond
-the Cosmic Void`;
+    const expected = `Search packages`;
 
     const SUT = new TesseractReader(config);
 
@@ -24,6 +22,6 @@ the Cosmic Void`;
     const result = await SUT.read(inputImage);
 
     // THEN
-    expect(result).toEqual(expected);
+    expect(result).toContain(expected);
   });
 });
