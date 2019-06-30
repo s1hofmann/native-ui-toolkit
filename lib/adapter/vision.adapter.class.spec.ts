@@ -98,36 +98,71 @@ describe("VisionAdapter class", () => {
     expect(finderMock.findMatch).toBeCalledWith(request);
   });
 
-  it("should delegate calls to readText with default language ENG", async () => {
-    // GIVEN
-    const finderMock = new TemplateMatchingFinder();
-    const screenMock = new ScreenAction();
-    const readerMock = new TesseractReader();
-    const imageMock = mockPartial<Image>({});
-    const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
+  describe("OCR", () => {
+    it("should delegate calls to readText with default language ENG", async () => {
+      // GIVEN
+      const finderMock = new TemplateMatchingFinder();
+      const screenMock = new ScreenAction();
+      const readerMock = new TesseractReader();
+      const imageMock = mockPartial<Image>({});
+      const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
 
-    // WHEN
-    await SUT.readText(imageMock);
+      // WHEN
+      await SUT.readText(imageMock);
 
-    expect(readerMock.read).toBeCalledTimes(1);
-    expect(readerMock.read).toBeCalledWith(imageMock, Language.ENG);
-  });
+      expect(readerMock.readPage).toBeCalledTimes(1);
+      expect(readerMock.readPage).toBeCalledWith(imageMock, Language.ENG);
+    });
 
-  it.each([
-    [Language.ENG],
-    [Language.GER]
-  ])("should delegate calls to readText with language %s", async (lang: Language) => {
-    // GIVEN
-    const finderMock = new TemplateMatchingFinder();
-    const screenMock = new ScreenAction();
-    const readerMock = new TesseractReader();
-    const imageMock = mockPartial<Image>({});
-    const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
+    it.each([
+      [Language.ENG],
+      [Language.GER]
+    ])("should delegate calls to readText with language %s", async (lang: Language) => {
+      // GIVEN
+      const finderMock = new TemplateMatchingFinder();
+      const screenMock = new ScreenAction();
+      const readerMock = new TesseractReader();
+      const imageMock = mockPartial<Image>({});
+      const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
 
-    // WHEN
-    await SUT.readText(imageMock, lang);
+      // WHEN
+      await SUT.readText(imageMock, lang);
 
-    expect(readerMock.read).toBeCalledTimes(1);
-    expect(readerMock.read).toBeCalledWith(imageMock, lang);
+      expect(readerMock.readPage).toBeCalledTimes(1);
+      expect(readerMock.readPage).toBeCalledWith(imageMock, lang);
+    });
+
+    it("should delegate calls to readWords with default language ENG", async () => {
+      // GIVEN
+      const finderMock = new TemplateMatchingFinder();
+      const screenMock = new ScreenAction();
+      const readerMock = new TesseractReader();
+      const imageMock = mockPartial<Image>({});
+      const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
+
+      // WHEN
+      await SUT.readWords(imageMock);
+
+      expect(readerMock.readWords).toBeCalledTimes(1);
+      expect(readerMock.readWords).toBeCalledWith(imageMock, Language.ENG);
+    });
+
+    it.each([
+      [Language.ENG],
+      [Language.GER]
+    ])("should delegate calls to readWords with language %s", async (lang: Language) => {
+      // GIVEN
+      const finderMock = new TemplateMatchingFinder();
+      const screenMock = new ScreenAction();
+      const readerMock = new TesseractReader();
+      const imageMock = mockPartial<Image>({});
+      const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
+
+      // WHEN
+      await SUT.readWords(imageMock, lang);
+
+      expect(readerMock.readWords).toBeCalledTimes(1);
+      expect(readerMock.readWords).toBeCalledWith(imageMock, lang);
+    });
   });
 });

@@ -4,6 +4,7 @@ import { MatchResult } from "../match-result.class";
 import { ScreenAction } from "../provider/native/robotjs-screen-action.class";
 import { ScreenActionProvider } from "../provider/native/screen-action-provider.interface";
 import { Language } from "../provider/ocr/language.enum";
+import { OCRResult } from "../provider/ocr/ocr-result.interface";
 import { TesseractReader } from "../provider/ocr/tesseract-reader.class";
 import { TextReader } from "../provider/ocr/text-reader.interface";
 import { DataSink } from "../provider/opencv/data-sink.interface";
@@ -119,11 +120,23 @@ export class VisionAdapter {
   }
 
   /**
-   * readText extracts text from a given image in a specified language
+   * readText extracts the full text from a given image in a specified language
    * @param image The image which text should be extracted from
    * @param language The language used for text extraction, defaults to english
+   * @memberof VisionAdapter
    */
   public readText(image: Image, language: Language = Language.ENG): Promise<string> {
-    return this.screenReader.read(image, language);
+    return this.screenReader.readPage(image, language);
+  }
+
+  /**
+   * readWords extracts a list of @link OCRResults recognized from an input image
+   * @param image The image which text should be extracted from
+   * @param language The language used for text extraction, defaults to english
+   * @return Promise<OCRResult[]> List of OCRResults holding the word text, its confidence and its bounding box
+   * @memberof VisionAdapter
+   */
+  public readWords(image: Image, language: Language = Language.ENG): Promise<OCRResult[]> {
+    return this.screenReader.readWords(image, language);
   }
 }
