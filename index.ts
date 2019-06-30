@@ -1,4 +1,4 @@
-import { join } from "path";
+import { basename, join } from "path";
 import { NativeAdapter } from "./lib/adapter/native.adapter.class";
 import { VisionAdapter } from "./lib/adapter/vision.adapter.class";
 import { Assert } from "./lib/assert.class";
@@ -21,7 +21,7 @@ export { linear } from "./lib/movementtype.function";
 export { Point } from "./lib/point.class";
 export { Region } from "./lib/region.class";
 
-const baseDir = (__dirname.endsWith("dist")) ? join(__dirname, "..") : __dirname;
+const baseDir = (basename(__dirname) === "dist") ? join(__dirname, "..") : __dirname;
 const screenReaderConfig = {
   corePath: join(baseDir, "data/tesseract/src/node/index.js"),
   langPath: join(baseDir, "data/tesseract/lang/"),
