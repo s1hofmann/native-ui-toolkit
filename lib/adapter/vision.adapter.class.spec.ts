@@ -17,7 +17,10 @@ describe("VisionAdapter class", () => {
     // GIVEN
     const finderMock = new TemplateMatchingFinder();
     const screenMock = new ScreenAction();
-    const SUT = new VisionAdapter(finderMock, screenMock);
+    const SUT = new VisionAdapter({
+      finder: finderMock,
+      screen: screenMock,
+    });
 
     // WHEN
     SUT.grabScreen();
@@ -30,8 +33,11 @@ describe("VisionAdapter class", () => {
     // GIVEN
     const finderMock = new TemplateMatchingFinder();
     const screenMock = new ScreenAction();
-    const SUT = new VisionAdapter(finderMock, screenMock);
     const screenRegion = new Region(0, 0, 100, 100);
+    const SUT = new VisionAdapter({
+      finder: finderMock,
+      screen: screenMock,
+    });
 
     // WHEN
     await SUT.grabScreenRegion(screenRegion);
@@ -45,7 +51,10 @@ describe("VisionAdapter class", () => {
     // GIVEN
     const finderMock = new TemplateMatchingFinder();
     const screenMock = new ScreenAction();
-    const SUT = new VisionAdapter(finderMock, screenMock);
+    const SUT = new VisionAdapter({
+      finder: finderMock,
+      screen: screenMock,
+    });
 
     // WHEN
     await SUT.screenWidth();
@@ -58,7 +67,10 @@ describe("VisionAdapter class", () => {
     // GIVEN
     const finderMock = new TemplateMatchingFinder();
     const screenMock = new ScreenAction();
-    const SUT = new VisionAdapter(finderMock, screenMock);
+    const SUT = new VisionAdapter({
+      finder: finderMock,
+      screen: screenMock,
+    });
 
     // WHEN
     await SUT.screenHeight();
@@ -71,7 +83,10 @@ describe("VisionAdapter class", () => {
     // GIVEN
     const finderMock = new TemplateMatchingFinder();
     const screenMock = new ScreenAction();
-    const SUT = new VisionAdapter(finderMock, screenMock);
+    const SUT = new VisionAdapter({
+      finder: finderMock,
+      screen: screenMock,
+    });
 
     // WHEN
     await SUT.screenSize();
@@ -83,7 +98,9 @@ describe("VisionAdapter class", () => {
   it("should delegate calls to findImage", async () => {
     // GIVEN
     const finderMock = new TemplateMatchingFinder();
-    const SUT = new VisionAdapter(finderMock);
+    const SUT = new VisionAdapter({
+      finder: finderMock,
+    });
     const request = new MatchRequest(
       new Image(100, 100, new ArrayBuffer(0), 3),
       "foo",
@@ -105,7 +122,11 @@ describe("VisionAdapter class", () => {
       const screenMock = new ScreenAction();
       const readerMock = new TesseractReader();
       const imageMock = mockPartial<Image>({});
-      const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
+      const SUT = new VisionAdapter({
+        finder: finderMock,
+        screen: screenMock,
+        screenReader: readerMock
+      });
 
       // WHEN
       await SUT.readText(imageMock);
@@ -123,7 +144,11 @@ describe("VisionAdapter class", () => {
       const screenMock = new ScreenAction();
       const readerMock = new TesseractReader();
       const imageMock = mockPartial<Image>({});
-      const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
+      const SUT = new VisionAdapter({
+        finder: finderMock,
+        screen: screenMock,
+        screenReader: readerMock
+      });
 
       // WHEN
       await SUT.readText(imageMock, lang);
@@ -138,7 +163,11 @@ describe("VisionAdapter class", () => {
       const screenMock = new ScreenAction();
       const readerMock = new TesseractReader();
       const imageMock = mockPartial<Image>({});
-      const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
+      const SUT = new VisionAdapter({
+        finder: finderMock,
+        screen: screenMock,
+        screenReader: readerMock
+      });
 
       // WHEN
       await SUT.readWords(imageMock);
@@ -156,7 +185,11 @@ describe("VisionAdapter class", () => {
       const screenMock = new ScreenAction();
       const readerMock = new TesseractReader();
       const imageMock = mockPartial<Image>({});
-      const SUT = new VisionAdapter(finderMock, screenMock, readerMock);
+      const SUT = new VisionAdapter({
+        finder: finderMock,
+        screen: screenMock,
+        screenReader: readerMock
+      });
 
       // WHEN
       await SUT.readWords(imageMock, lang);

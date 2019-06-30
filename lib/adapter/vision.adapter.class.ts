@@ -13,6 +13,13 @@ import { ImageWriter } from "../provider/opencv/image-writer.class";
 import { TemplateMatchingFinder } from "../provider/opencv/template-matching-finder.class";
 import { Region } from "../region.class";
 
+export interface VisionAdapterConfig {
+  finder?: FinderInterface;
+  screen?: ScreenActionProvider;
+  screenReader?: TextReader;
+  dataSink?: DataSink;
+}
+
 /**
  * VisionAdapter serves as an abstraction layer for all image based interactions.
  *
@@ -21,12 +28,17 @@ import { Region } from "../region.class";
  * All actions which involve screenshots / images are bundled in this adapter.
  */
 export class VisionAdapter {
-  constructor(
-    private finder: FinderInterface = new TemplateMatchingFinder(),
-    private screen: ScreenActionProvider = new ScreenAction(),
-    private screenReader: TextReader = new TesseractReader(),
-    private dataSink: DataSink = new ImageWriter()
-  ) {
+
+  private dataSink: DataSink;
+  private finder: FinderInterface;
+  private screen: ScreenActionProvider;
+  private screenReader: TextReader;
+
+  constructor(config?: VisionAdapterConfig) {
+    this.dataSink = (config && config.dataSink) || new ImageWriter();
+    this.finder = (config && config.finder) || new TemplateMatchingFinder();
+    this.screen = (config && config.screen) || new ScreenAction();
+    this.screenReader = (config && config.screenReader) || new TesseractReader();
   }
 
   /**

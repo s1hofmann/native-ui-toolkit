@@ -11,12 +11,24 @@ jest.mock("../provider/native/robotjs-mouse-action.class");
 jest.mock("../provider/native/robotjs-keyboard-action.class");
 
 describe("NativeAdapter class", () => {
+
+  let clipboardMock = new ClipboardAction();
+  let keyboardMock = new KeyboardAction();
+  let mouseMock = new MouseAction();
+  let SUT: NativeAdapter;
+
+  beforeEach(() => {
+    clipboardMock = new ClipboardAction();
+    keyboardMock = new KeyboardAction();
+    mouseMock = new MouseAction();
+    SUT = new NativeAdapter({
+      clipboard: clipboardMock,
+      keyboard: keyboardMock,
+      mouse: mouseMock
+    });
+  });
   it("should delegate calls to setMouseDelay", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
     const delay = 5;
 
     // WHEN
@@ -29,10 +41,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to setMousePosition", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
     const newPosition = new Point(10, 10);
 
     // WHEN
@@ -45,10 +53,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to currentMousePosition", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
 
     // WHEN
     await SUT.currentMousePosition();
@@ -59,10 +63,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to leftClick", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
 
     // WHEN
     await SUT.leftClick();
@@ -73,10 +73,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to rightClick", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
 
     // WHEN
     await SUT.rightClick();
@@ -87,10 +83,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to middleClick", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
 
     // WHEN
     await SUT.middleClick();
@@ -101,10 +93,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to pressButton", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
     const buttonToPress = Button.LEFT;
 
     // WHEN
@@ -117,10 +105,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to releaseButton", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
     const buttonToRelease = Button.LEFT;
 
     // WHEN
@@ -133,10 +117,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to pressKey", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
     const keyToPress = Key.A;
 
     // WHEN
@@ -149,10 +129,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to releaseButton", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
     const keyToRelease = Key.A;
 
     // WHEN
@@ -165,10 +141,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to click", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
     const keyToClick = Key.A;
 
     // WHEN
@@ -181,10 +153,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to type", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
     const stringToType = "testString";
 
     // WHEN
@@ -197,10 +165,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to copy", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
     const stringToCopy = "testString";
 
     // WHEN
@@ -213,10 +177,6 @@ describe("NativeAdapter class", () => {
 
   it("should delegate calls to paste", async () => {
     // GIVEN
-    const clipboardMock = new ClipboardAction();
-    const keyboardMock = new KeyboardAction();
-    const mouseMock = new MouseAction();
-    const SUT = new NativeAdapter(clipboardMock, keyboardMock, mouseMock);
 
     // WHEN
     await SUT.paste();

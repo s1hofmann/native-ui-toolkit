@@ -4,9 +4,15 @@ import { Point } from "../point.class";
 import { ClipboardActionProvider } from "../provider/native/clipboard-action-provider.interface";
 import { ClipboardAction } from "../provider/native/clipboardy-clipboard-action.class";
 import { KeyboardActionProvider } from "../provider/native/keyboard-action-provider.interface";
-import { MouseActionInterface } from "../provider/native/mouse-action-provider.interface";
+import { MouseActionProvider } from "../provider/native/mouse-action-provider.interface";
 import { KeyboardAction } from "../provider/native/robotjs-keyboard-action.class";
 import { MouseAction } from "../provider/native/robotjs-mouse-action.class";
+
+export interface NativeAdapterConfig {
+  clipboard?: ClipboardActionProvider;
+  keyboard?: KeyboardActionProvider;
+  mouse?: MouseActionProvider;
+}
 
 /**
  * NativeAdapter serves as an abstraction layer for all OS level interactions.
@@ -16,11 +22,16 @@ import { MouseAction } from "../provider/native/robotjs-mouse-action.class";
  * All actions which involve the OS are bundled in this adapter.
  */
 export class NativeAdapter {
-  constructor(
-    private clipboard: ClipboardActionProvider = new ClipboardAction(),
-    private keyboard: KeyboardActionProvider = new KeyboardAction(),
-    private mouse: MouseActionInterface = new MouseAction(),
-  ) {}
+
+  private clipboard: ClipboardActionProvider;
+  private keyboard: KeyboardActionProvider;
+  private mouse: MouseActionProvider;
+
+  constructor(config?: NativeAdapterConfig) {
+    this.clipboard = (config && config.clipboard) || new ClipboardAction();
+    this.keyboard = (config && config.keyboard) || new KeyboardAction();
+    this.mouse = (config && config.mouse) || new MouseAction();
+  }
 
   /**
    * setMouseDelay configures mouse speed for movement
