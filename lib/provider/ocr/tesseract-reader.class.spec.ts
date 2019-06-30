@@ -21,7 +21,7 @@ describe("TesseractReader", () => {
     const SUT = new TesseractReader(config);
 
     // WHEN
-    const result = await SUT.read(inputImage);
+    const result = await SUT.readPage(inputImage);
 
     // THEN
     expect(result).toContain(expected);
@@ -39,7 +39,7 @@ describe("TesseractReader", () => {
     const SUT = new TesseractReader();
 
     // WHEN
-    const result = await SUT.read(inputImage);
+    const result = await SUT.readPage(inputImage);
 
     // THEN
     expect(result).toContain(expected);
