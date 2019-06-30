@@ -9,7 +9,7 @@ declare module "tesseract.js" {
     corePath: string;
   }
 
-  export function create(options: WorkerOptions): TesseractWorker;
+  export function create(options?: WorkerOptions): TesseractWorker;
 
   export class TesseractWorker {
     constructor(options?: WorkerOptions);
