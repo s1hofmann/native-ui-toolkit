@@ -97,3 +97,14 @@ describe("E2E mouse button demo", () => {
     }
   });
 });
+
+describe.skip("E2E OCR demo", () => {
+  it("should locate text on screen", async () => {
+    const result = await screen.findText("WebStorm", {
+      searchRegion: new Region(0, 0, 200, 20)
+    });
+
+    // THEN
+    await mouse.move(straightTo(centerOf(result)));
+  });
+});

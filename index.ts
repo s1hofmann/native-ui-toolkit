@@ -21,10 +21,11 @@ export { linear } from "./lib/movementtype.function";
 export { Point } from "./lib/point.class";
 export { Region } from "./lib/region.class";
 
+const baseDir = (__dirname.endsWith("dist")) ? join(__dirname, "..") : __dirname;
 const screenReaderConfig = {
-  corePath: join(__dirname, "data/tesseract/src/node/index.js"),
-  langPath: join(__dirname, "data/tesseract/lang/"),
-  workerPath: join(__dirname, "data/tesseract/src/node/worker.js"),
+  corePath: join(baseDir, "data/tesseract/src/node/index.js"),
+  langPath: join(baseDir, "data/tesseract/lang/"),
+  workerPath: join(baseDir, "data/tesseract/src/node/worker.js"),
 };
 
 const screenReader = new TesseractReader(screenReaderConfig);
