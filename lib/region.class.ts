@@ -29,7 +29,6 @@ export class Region {
   }
 
   public toString() {
-    return `(${this.left}, ${this.top}, ${this.left + this.width}, ${this.top +
-      this.height})`;
+    return `(${this.left}, ${this.top}, ${this.width}, ${this.height})`;
   }
 }
