@@ -1,3 +1,4 @@
+import { join } from "path";
 import { NativeAdapter } from "./lib/adapter/native.adapter.class";
 import { VisionAdapter } from "./lib/adapter/vision.adapter.class";
 import { Assert } from "./lib/assert.class";
@@ -5,6 +6,7 @@ import { Clipboard } from "./lib/clipboard.class";
 import { Keyboard } from "./lib/keyboard.class";
 import { Mouse } from "./lib/mouse.class";
 import { createMovementApi } from "./lib/movement.function";
+import { TesseractReader } from "./lib/provider/ocr/tesseract-reader.class";
 import { Screen } from "./lib/screen.class";
 import { LineHelper } from "./lib/util/linehelper.class";
 
@@ -19,7 +21,16 @@ export { linear } from "./lib/movementtype.function";
 export { Point } from "./lib/point.class";
 export { Region } from "./lib/region.class";
 
-const screenActions = new VisionAdapter();
+const screenReaderConfig = {
+  corePath: join(__dirname, "data/tesseract/src/node/index.js"),
+  langPath: join(__dirname, "data/tesseract/lang/"),
+  workerPath: join(__dirname, "data/tesseract/src/node/worker.js"),
+};
+
+const screenReader = new TesseractReader(screenReaderConfig);
+const screenActions = new VisionAdapter({
+  screenReader
+});
 const nativeActions = new NativeAdapter();
 const lineHelper = new LineHelper();
 
