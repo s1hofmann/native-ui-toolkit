@@ -2,17 +2,19 @@ import { join } from "path";
 import { ImageReader } from "../opencv/image-reader.class";
 import { TesseractReader } from "./tesseract-reader.class";
 
+const baseDir = join(__dirname, "../../..");
+
 describe("TesseractReader", () => {
   it("should extract text from an image", async () => {
     // GIVEN
     const config = {
-      corePath: join(__dirname, "../../../data/tesseract/src/node/index.js"),
-      langPath: join(__dirname, "../../../data/tesseract/lang/"),
-      workerPath: join(__dirname, "../../../data/tesseract/src/node/worker.js"),
+      corePath: join(baseDir, "data/tesseract/src/node/index.js"),
+      langPath: join(baseDir, "data/tesseract/lang/"),
+      workerPath: join(baseDir, "data/tesseract/src/node/worker.js"),
     };
     const inputImage = await new ImageReader()
       .load(
-        join(__dirname, "../../../e2e/assets/npm.png")
+        join(baseDir, "e2e/assets/npm.png")
       );
     const expected = `Search packages`;
 
