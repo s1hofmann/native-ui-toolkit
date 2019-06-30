@@ -6,6 +6,7 @@ import { generateOutputPath } from "./generate-output-path.function";
 import { LocationParameters } from "./locationparameters.class";
 import { MatchRequest } from "./match-request.class";
 import { MatchResult } from "./match-result.class";
+import { OCRResult } from "./provider/ocr/ocr-result.interface";
 import { Region } from "./region.class";
 import { timeout } from "./util/poll-action.function";
 
@@ -15,6 +16,7 @@ export class Screen {
   public config = {
     confidence: 0.99,
     resourceDirectory: cwd(),
+    textConfidence: 0.7,
   };
 
   constructor(
@@ -40,17 +42,17 @@ export class Screen {
 
     const fullPathToNeedle = normalize(join(this.config.resourceDirectory, pathToNeedle));
 
-    const screenImage = await this.vision.grabScreen();
-
-    const matchRequest = new MatchRequest(
-      screenImage,
-      fullPathToNeedle,
-      searchRegion,
-      minMatch,
-    );
-
     return new Promise<Region>(async (resolve, reject) => {
       try {
+        const screenImage = await this.vision.grabScreen();
+
+        const matchRequest = new MatchRequest(
+          screenImage,
+          fullPathToNeedle,
+          searchRegion,
+          minMatch,
+        );
+
         const matchResult = await this.vision.findOnScreenRegion(matchRequest);
         if (matchResult.confidence >= minMatch) {
           const possibleHooks = this.findHooks.get(pathToNeedle) || [];
@@ -69,6 +71,32 @@ export class Screen {
         reject(
           `Searching for ${pathToNeedle} failed. Reason: '${e}'`,
         );
+      }
+    });
+  }
+
+  public async findText(
+    searchText: string,
+    params?: LocationParameters
+  ) {
+    const minMatch = (params && params.confidence) || this.config.textConfidence;
+    const searchRegion =
+      (params && params.searchRegion) || await this.vision.screenSize();
+    return new Promise<OCRResult>(async (resolve, reject) => {
+      try {
+        const currentScreen = await this.vision.grabScreenRegion(searchRegion);
+        const findings = await this.vision.readWords(currentScreen);
+        const filteredResults = findings
+          .filter(finding => finding.confidence >= minMatch)
+          .filter(finding => finding.text.indexOf(searchText) > -1)
+          .sort((finding1: OCRResult, finding2: OCRResult) => finding2.confidence - finding1.confidence);
+        if (filteredResults.length < 1) {
+          reject(`Failed to detect valid match for ${searchText} with confidence ${minMatch} in ${searchRegion}`);
+        } else {
+          resolve(filteredResults.pop());
+        }
+      } catch (e) {
+        reject(e);
       }
     });
   }
