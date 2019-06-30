@@ -5,12 +5,9 @@
  */
 import { Image } from "../../image.class";
 import { Language } from "./language.enum";
+import { OCRResult } from "./ocr-result.interface";
 
 export interface TextReader {
-  /**
-   * store will write data to disk
-   * @param image Image to read text from
-   * @param language Specific language to use for text extraction
-   */
-  read(image: Image, language: Language): Promise<string>;
+  readPage(image: Image, language: Language): Promise<string>;
+  readWords(image: Image, language: Language): Promise<OCRResult[]>;
 }
