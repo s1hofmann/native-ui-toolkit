@@ -26,4 +26,22 @@ describe("TesseractReader", () => {
     // THEN
     expect(result).toContain(expected);
   });
+
+  it("should use fallback config when not explicitly configured", async () => {
+    // GIVEN
+    jest.setTimeout(60000);
+    const inputImage = await new ImageReader()
+      .load(
+        join(baseDir, "e2e/assets/npm.png")
+      );
+    const expected = `Search packages`;
+
+    const SUT = new TesseractReader();
+
+    // WHEN
+    const result = await SUT.read(inputImage);
+
+    // THEN
+    expect(result).toContain(expected);
+  });
 });
