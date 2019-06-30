@@ -1,6 +1,11 @@
 import { existsSync } from "fs";
+import { join } from "path";
+import { NativeAdapter } from "./adapter/native.adapter.class";
 import { VisionAdapter } from "./adapter/vision.adapter.class";
 import { FileType } from "./file-type.enum";
+import { centerOf } from "./location.function";
+import { TesseractReader } from "./provider/ocr/tesseract-reader.class";
+import { Region } from "./region.class";
 import { Screen } from "./screen.class";
 import { sleep } from "./sleep.function";
 
@@ -108,5 +113,47 @@ describe("Screen.", () => {
 
     // THEN
     expect(end - start).toBeGreaterThanOrEqual(timeout);
+  });
+
+  it.skip("should find a single word inside a target region", async () => {
+    // GIVEN
+    const screenReaderConfig = {
+      corePath: join(__dirname, "../data/tesseract/src/node/index.js"),
+      langPath: join(__dirname, "../data/tesseract/lang/"),
+      workerPath: join(__dirname, "../data/tesseract/src/node/worker.js"),
+    };
+    const screenReader = new TesseractReader(screenReaderConfig);
+    const visionAdapter = new VisionAdapter({
+      screenReader
+    });
+    const nativeAdapter = new NativeAdapter();
+    const SUT = new Screen(visionAdapter);
+
+    // WHEN
+    const result = await SUT.findText("WebStorm", {searchRegion: new Region(0, 0, 200, 20)});
+
+    // THEN
+    await nativeAdapter.setMousePosition(await centerOf(result));
+  });
+
+  it.skip("should read the whole text in a region", async () => {
+    // GIVEN
+    const screenReaderConfig = {
+      corePath: join(__dirname, "../data/tesseract/src/node/index.js"),
+      langPath: join(__dirname, "../data/tesseract/lang/"),
+      workerPath: join(__dirname, "../data/tesseract/src/node/worker.js"),
+    };
+    const screenReader = new TesseractReader(screenReaderConfig);
+    const visionAdapter = new VisionAdapter({
+      screenReader
+    });
+    const SUT = new Screen(visionAdapter);
+    const expected = "WebStorm";
+
+    // WHEN
+    const result = await SUT.readText(new Region(40, 0, 70, 20));
+
+    // THEN
+    expect(result).toEqual(expected);
   });
 });

@@ -78,11 +78,11 @@ export class Screen {
   public async findText(
     searchText: string,
     params?: LocationParameters
-  ) {
+  ): Promise<Region> {
     const minMatch = (params && params.confidence) || this.config.textConfidence;
     const searchRegion =
       (params && params.searchRegion) || await this.vision.screenSize();
-    return new Promise<OCRResult>(async (resolve, reject) => {
+    return new Promise<Region>(async (resolve, reject) => {
       try {
         const currentScreen = await this.vision.grabScreenRegion(searchRegion);
         const findings = await this.vision.readWords(currentScreen);
@@ -93,7 +93,25 @@ export class Screen {
         if (filteredResults.length < 1) {
           reject(`Failed to detect valid match for ${searchText} with confidence ${minMatch} in ${searchRegion}`);
         } else {
-          resolve(filteredResults.pop());
+          resolve(filteredResults[0].boundingBox);
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  public async readText(
+    target: Region
+  ) {
+    return new Promise<string>(async (resolve, reject) => {
+      try {
+        const currentScreen = await this.vision.grabScreenRegion(target);
+        const text = await this.vision.readText(currentScreen);
+        if (!text || text.length === 0) {
+          reject(`Failed to extract text from ${target}`);
+        } else {
+          resolve(text);
         }
       } catch (e) {
         reject(e);
