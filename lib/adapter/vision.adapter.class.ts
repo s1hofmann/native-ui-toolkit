@@ -3,6 +3,9 @@ import { MatchRequest } from "../match-request.class";
 import { MatchResult } from "../match-result.class";
 import { ScreenAction } from "../provider/native/robotjs-screen-action.class";
 import { ScreenActionProvider } from "../provider/native/screen-action-provider.interface";
+import { Language } from "../provider/ocr/language.enum";
+import { TesseractReader } from "../provider/ocr/tesseract-reader.class";
+import { TextReader } from "../provider/ocr/text-reader.interface";
 import { DataSink } from "../provider/opencv/data-sink.interface";
 import { FinderInterface } from "../provider/opencv/finder.interface";
 import { ImageWriter } from "../provider/opencv/image-writer.class";
@@ -10,16 +13,17 @@ import { TemplateMatchingFinder } from "../provider/opencv/template-matching-fin
 import { Region } from "../region.class";
 
 /**
- * OpenCVAdapter serves as an abstraction layer for all image based interactions.
+ * VisionAdapter serves as an abstraction layer for all image based interactions.
  *
  * This allows to provide a high level interface for image based actions,
- * whithout having to spread (possibly) multiple dependencies all over the code.
+ * without having to spread (possibly) multiple dependencies all over the code.
  * All actions which involve screenshots / images are bundled in this adapter.
  */
 export class VisionAdapter {
   constructor(
     private finder: FinderInterface = new TemplateMatchingFinder(),
     private screen: ScreenActionProvider = new ScreenAction(),
+    private screenReader: TextReader = new TesseractReader(),
     private dataSink: DataSink = new ImageWriter()
   ) {
   }
@@ -112,5 +116,14 @@ export class VisionAdapter {
    */
   public saveImage(image: Image, path: string): Promise<void> {
     return (this.dataSink as ImageWriter).store(image, path);
+  }
+
+  /**
+   * readText extracts text from a given image in a specified language
+   * @param image The image which text should be extracted from
+   * @param language The language used for text extraction, defaults to english
+   */
+  public readText(image: Image, language: Language = Language.ENG): Promise<string> {
+    return this.screenReader.read(image, language);
   }
 }
