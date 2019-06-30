@@ -4,14 +4,14 @@ import { Point } from "../../point.class";
 /**
  * A MouseActionProvider should provide access to a system's mouse input
  *
- * @interface MouseActionInterface
+ * @interface MouseActionProvider
  */
-export interface MouseActionInterface {
+export interface MouseActionProvider {
   /**
    * setMouseDelay should allow to configure mouse movement speed
    *
    * @param {number} delay The delay
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   setMouseDelay(delay: number): void;
 
@@ -19,7 +19,7 @@ export interface MouseActionInterface {
    * setMousePosition should allow to set the mouse cursor position
    *
    * @param {Point} p The point to which the mouse pointer should be set
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   setMousePosition(p: Point): Promise<void>;
 
@@ -27,28 +27,28 @@ export interface MouseActionInterface {
    * currentMousePosition should return the current mouse pointer position
    *
    * @returns {Promise<Point>} The current mouse pointer position
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   currentMousePosition(): Promise<Point>;
 
   /**
    * leftClick should allow to perform a left click via OS event
    *
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   leftClick(): Promise<void>;
 
   /**
    * rightClick should allow to perform a right click via OS event
    *
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   rightClick(): Promise<void>;
 
   /**
    * middleClick should allow to perform a middle click via OS event
    *
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   middleClick(): Promise<void>;
 
@@ -56,7 +56,7 @@ export interface MouseActionInterface {
    * scrollUp should allow to perform an upward mouse scroll
    *
    * @param {number} amount The scroll amount
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   scrollUp(amount: number): Promise<void>;
 
@@ -64,7 +64,7 @@ export interface MouseActionInterface {
    * scrollDown should allow to perform an downward mouse scroll
    *
    * @param {number} amount The scroll amount
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   scrollDown(amount: number): Promise<void>;
 
@@ -72,7 +72,7 @@ export interface MouseActionInterface {
    * scrollLeft should allow to perform a left mouse scroll
    *
    * @param {number} amount The scroll amount
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   scrollLeft(amount: number): Promise<void>;
 
@@ -80,7 +80,7 @@ export interface MouseActionInterface {
    * scrollRight should perform a right mouse scroll
    *
    * @param {number} amount The scroll amount
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   scrollRight(amount: number): Promise<void>;
 
@@ -88,7 +88,7 @@ export interface MouseActionInterface {
    * pressButton should allow to press and hold a mouse button
    *
    * @param {Button} btn The button to press and hold
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   pressButton(btn: Button): Promise<void>;
 
@@ -96,7 +96,7 @@ export interface MouseActionInterface {
    * releaseButton should allow to release a pressed button
    *
    * @param {Button} btn The button to release
-   * @memberof MouseActionInterface
+   * @memberof MouseActionProvider
    */
   releaseButton(btn: Button): Promise<void>;
 }

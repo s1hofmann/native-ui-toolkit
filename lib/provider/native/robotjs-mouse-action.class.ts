@@ -1,9 +1,9 @@
 import robot = require("robotjs-node10");
 import { Button } from "../../button.enum";
 import { Point } from "../../point.class";
-import { MouseActionInterface } from "./mouse-action-provider.interface";
+import { MouseActionProvider } from "./mouse-action-provider.interface";
 
-export class MouseAction implements MouseActionInterface {
+export class MouseAction implements MouseActionProvider {
   public static buttonLookup(btn: Button): any {
     return this.ButtonLookupMap.get(btn);
   }
