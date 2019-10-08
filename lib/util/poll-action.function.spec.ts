@@ -85,14 +85,14 @@ describe("poll-action", () => {
         // GIVEN
         const updateInterval = 200;
         const maxDuration = 1000;
-        const delay = 2.2 * updateInterval;
+        const delay = 2.5 * updateInterval;
+        const start = Date.now();
         const action = jest.fn(() => {
             const interval = (Date.now() - start);
             return new Promise<boolean>((resolve, reject) => (interval > delay) ? resolve(true) : reject());
         });
 
         // WHEN
-        const start = Date.now();
         await timeout(updateInterval, maxDuration, action);
         const end = Date.now();
 

@@ -1,8 +1,8 @@
-import robot = require("robotjs-node10");
+import robot = require("@nut-tree/libnut");
 import { Region } from "../../region.class";
 import { ScreenAction } from "./robotjs-screen-action.class";
 
-jest.mock("robotjs-node10");
+jest.mock("@nut-tree/libnut");
 
 beforeEach(() => {
   jest.resetAllMocks();

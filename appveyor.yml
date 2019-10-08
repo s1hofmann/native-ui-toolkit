@@ -1,0 +1,28 @@
+platform:
+  - x64
+
+image:
+  - Visual Studio 2017
+
+init:
+  - git config --global core.autocrlf true
+
+environment:
+  matrix:
+    - nodejs_version: "10"
+    - nodejs_version: "11"
+    - nodejs_version: "12"
+
+clone_folder: c:\projects\nut
+
+install:
+  - ps: Install-Product node $env:nodejs_version x64
+  - node --version
+  - cd c:\projects\nut
+  - npm ci
+  - npm run compile
+
+build: off
+
+test_script:
+  - npm test

@@ -1,4 +1,4 @@
-import robot = require("robotjs-node10");
+import robot = require("@nut-tree/libnut");
 import { Image } from "../../image.class";
 import { Region } from "../../region.class";
 import { ScreenActionProvider } from "./screen-action-provider.interface";

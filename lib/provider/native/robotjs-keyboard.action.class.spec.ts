@@ -1,8 +1,8 @@
-import robot = require("robotjs-node10");
+import robot = require("@nut-tree/libnut");
 import { Key } from "../../key.enum";
 import { KeyboardAction } from "./robotjs-keyboard-action.class";
 
-jest.mock("robotjs-node10");
+jest.mock("@nut-tree/libnut");
 
 beforeEach(() => {
   jest.resetAllMocks();

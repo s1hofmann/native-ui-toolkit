@@ -1,9 +1,3 @@
-os: linux
-dist: xenial
-
-language: node_js
-node_js:
-  - "lts/dubnium"
 cache: npm
 
 addons:
@@ -15,19 +9,42 @@ addons:
 services:
   - docker
 
-before_install:
-  # Update Docker
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-  - docker pull s1hofmann/nut-ci:latest
-  - docker run -it -d --name nut-ci --user $(id -u):$(id -g) -v ${PWD}:${PWD}:rw s1hofmann/nut-ci:latest bash
+matrix:
+  include:
+    - name: "Linux Node 10"
+      os: linux
+      dist: xenial
+      env: NODE_VERSION=10
+    - name: "Linux Node 11"
+      os: linux
+      dist: xenial
+      env: NODE_VERSION=11
+    - name: "Linux Node 12"
+      os: linux
+      dist: xenial
+      env: NODE_VERSION=12
+    - name: "macOS Node 10"
+      os: osx
+      osx_image: xcode11
+      language: node_js
+      node_js: "10"
+    - name: "macOS Node 11"
+      os: osx
+      osx_image: xcode11
+      language: node_js
+      node_js: "11"
+    - name: "macOS Node 12"
+      os: osx
+      osx_image: xcode11
+      language: node_js
+      node_js: "12"
 
+before_install:
+  - "bash ./.build/setup_${TRAVIS_OS_NAME}.sh"
 install: true
 
 script:
-  - travis_retry docker exec nut-ci bash -c "bash $PWD/.build/build.sh ${PWD} lts/dubnium"
+  - "bash ./.build/run_${TRAVIS_OS_NAME}.sh"
 
 after_success:
   - sonar-scanner

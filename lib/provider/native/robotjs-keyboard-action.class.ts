@@ -1,4 +1,4 @@
-import robot = require("robotjs-node10");
+import robot = require("@nut-tree/libnut");
 import { Key } from "../../key.enum";
 import { KeyboardActionProvider } from "./keyboard-action-provider.interface";
 
