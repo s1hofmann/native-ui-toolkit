@@ -1,7 +1,7 @@
 import * as cv from "opencv4nodejs-prebuilt";
 import * as path from "path";
+import { ImageMatchRequest } from "../../image-match-request.class";
 import { Image } from "../../image.class";
-import { MatchRequest } from "../../match-request.class";
 import { MatchResult } from "../../match-result.class";
 import { Region } from "../../region.class";
 import { ScaledMatchResult } from "../../scaled-match-result.class";
@@ -21,7 +21,7 @@ async function loadNeedle(image: Image): Promise<cv.Mat> {
   return ImageProcessor.fromImageWithoutAlphaChannel(image);
 }
 
-async function loadHaystack(matchRequest: MatchRequest): Promise<cv.Mat> {
+async function loadHaystack(matchRequest: ImageMatchRequest): Promise<cv.Mat> {
   const searchRegion = determineScaledSearchRegion(matchRequest);
   if (matchRequest.haystack.hasAlphaChannel) {
     return ImageProcessor.fromImageWithAlphaChannel(
@@ -69,7 +69,7 @@ export class TemplateMatchingFinder implements FinderInterface {
   ) {
   }
 
-  public async findMatches(matchRequest: MatchRequest, debug: boolean = false): Promise<ScaledMatchResult[]> {
+  public async findMatches(matchRequest: ImageMatchRequest, debug: boolean = false): Promise<ScaledMatchResult[]> {
     let needle: cv.Mat;
     try {
       const needleInput = await this.source.load(matchRequest.pathToNeedle);
@@ -172,7 +172,7 @@ export class TemplateMatchingFinder implements FinderInterface {
     });
   }
 
-  public async findMatch(matchRequest: MatchRequest, debug: boolean = false): Promise<MatchResult> {
+  public async findMatch(matchRequest: ImageMatchRequest, debug: boolean = false): Promise<MatchResult> {
     return new Promise<MatchResult>(async (resolve, reject) => {
       try {
         const matches = await this.findMatches(matchRequest, debug);

@@ -3,8 +3,8 @@ import { cwd } from "process";
 import { VisionAdapter } from "./adapter/vision.adapter.class";
 import { FileType } from "./file-type.enum";
 import { generateOutputPath } from "./generate-output-path.function";
+import { ImageMatchRequest } from "./image-match-request.class";
 import { LocationParameters } from "./locationparameters.class";
-import { MatchRequest } from "./match-request.class";
 import { MatchResult } from "./match-result.class";
 import { OCRResult } from "./provider/ocr/ocr-result.interface";
 import { Region } from "./region.class";
@@ -46,7 +46,7 @@ export class Screen {
       try {
         const screenImage = await this.vision.grabScreen();
 
-        const matchRequest = new MatchRequest(
+        const matchRequest = new ImageMatchRequest(
           screenImage,
           fullPathToNeedle,
           searchRegion,
@@ -84,7 +84,7 @@ export class Screen {
       (params && params.searchRegion) || await this.vision.screenSize();
     return new Promise<Region>(async (resolve, reject) => {
       try {
-        const currentScreen = await this.vision.grabScreenRegion(searchRegion);
+        const currentScreen = await this.vision.grabScreen();
         const findings = await this.vision.readWords(currentScreen);
         const filteredResults = findings
           .filter(finding => finding.confidence >= minMatch)

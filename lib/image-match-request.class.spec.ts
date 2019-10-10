@@ -1,10 +1,10 @@
+import { ImageMatchRequest } from "./image-match-request.class";
 import { Image } from "./image.class";
-import { MatchRequest } from "./match-request.class";
 import { Region } from "./region.class";
 
 describe("MatchRequest", () => {
   it("should default to multi-scale matching", () => {
-    const SUT = new MatchRequest(
+    const SUT = new ImageMatchRequest(
       new Image(100, 100,
         new ArrayBuffer(0), 3
       ),

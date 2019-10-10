@@ -1,7 +1,7 @@
 import { Image } from "./image.class";
 import { Region } from "./region.class";
 
-export class MatchRequest {
+export class ImageMatchRequest {
   constructor(
     public readonly haystack: Image,
     public readonly pathToNeedle: string,

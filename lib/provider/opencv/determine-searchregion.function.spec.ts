@@ -1,6 +1,6 @@
 import { mockPartial } from "sneer";
+import { ImageMatchRequest } from "../../image-match-request.class";
 import { Image } from "../../image.class";
-import { MatchRequest } from "../../match-request.class";
 import { Region } from "../../region.class";
 import { determineScaledSearchRegion } from "./determine-searchregion.function";
 
@@ -17,7 +17,7 @@ describe("determineSearchRegion", () => {
     const inputSearchRegion = new Region(0, 0, 100, 100);
     const expectedSearchRegion = new Region(0, 0, 150, 200);
 
-    const matchRequest = new MatchRequest(
+    const matchRequest = new ImageMatchRequest(
       imageMock,
       needlePath,
       inputSearchRegion,
@@ -44,7 +44,7 @@ describe("determineSearchRegion", () => {
       const inputSearchRegion = new Region(0, 0, 100, 100);
       const expectedSearchRegion = new Region(0, 0, 100, 100);
 
-      const matchRequest = new MatchRequest(
+      const matchRequest = new ImageMatchRequest(
         imageMock,
         needlePath,
         inputSearchRegion,

@@ -1,6 +1,6 @@
 import { mockPartial } from "sneer";
+import { ImageMatchRequest } from "../image-match-request.class";
 import { Image } from "../image.class";
-import { MatchRequest } from "../match-request.class";
 import { ScreenAction } from "../provider/native/robotjs-screen-action.class";
 import { Language } from "../provider/ocr/language.enum";
 import { TesseractReader } from "../provider/ocr/tesseract-reader.class";
@@ -101,7 +101,7 @@ describe("VisionAdapter class", () => {
     const SUT = new VisionAdapter({
       finder: finderMock,
     });
-    const request = new MatchRequest(
+    const request = new ImageMatchRequest(
       new Image(100, 100, new ArrayBuffer(0), 3),
       "foo",
       new Region(0, 0, 100, 100),

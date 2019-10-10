@@ -1,7 +1,7 @@
-import { MatchRequest } from "../../match-request.class";
+import { ImageMatchRequest } from "../../image-match-request.class";
 import { Region } from "../../region.class";
 
-export function determineScaledSearchRegion(matchRequest: MatchRequest): Region {
+export function determineScaledSearchRegion(matchRequest: ImageMatchRequest): Region {
   const searchRegion = matchRequest.searchRegion;
   const scaleX = matchRequest.haystack.pixelDensity.scaleX || 1.0;
   const scaleY = matchRequest.haystack.pixelDensity.scaleY || 1.0;

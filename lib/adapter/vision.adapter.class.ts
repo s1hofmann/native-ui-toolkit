@@ -1,5 +1,5 @@
+import { ImageMatchRequest } from "../image-match-request.class";
 import { Image } from "../image.class";
-import { MatchRequest } from "../match-request.class";
 import { MatchResult } from "../match-result.class";
 import { ScreenAction } from "../provider/native/robotjs-screen-action.class";
 import { ScreenActionProvider } from "../provider/native/screen-action-provider.interface";
@@ -67,12 +67,12 @@ export class VisionAdapter {
    * If multiple possible occurences are found, the one with the highes probability is returned.
    * For matchProbability < 0.99 the search will be performed on grayscale images.
    *
-   * @param {MatchRequest} matchRequest A match request which holds all required matching data
+   * @param {ImageMatchRequest} matchRequest A match request which holds all required matching data
    * @returns {Promise<MatchResult>} MatchResult will contain location and probability of a possible match
    * @memberof VisionAdapter
    */
   public async findOnScreenRegion(
-    matchRequest: MatchRequest,
+    matchRequest: ImageMatchRequest,
   ): Promise<MatchResult> {
     return new Promise<MatchResult>(async (resolve, reject) => {
       try {
