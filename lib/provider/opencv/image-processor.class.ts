@@ -76,4 +76,49 @@ export class ImageProcessor {
     }
     return new Image(mat.cols, mat.rows, mat.getData(), mat.channels, img.pixelDensity);
   }
+
+  public static async threshold(
+    img: Image,
+    blockSize: number = 11,
+    delta: number = 2
+  ): Promise<Image> {
+    let mat: cv.Mat;
+    if (img.hasAlphaChannel) {
+      mat = await ImageProcessor.fromImageWithAlphaChannel(img);
+    } else {
+      mat = await ImageProcessor.fromImageWithoutAlphaChannel(img);
+    }
+    const oddBlockSize = (blockSize % 2 === 0) ? blockSize + 1 : blockSize;
+    const gray = mat.bgrToGray();
+    const thresh = await gray.adaptiveThresholdAsync(
+      255,
+      cv.ADAPTIVE_THRESH_GAUSSIAN_C,
+      cv.THRESH_BINARY,
+      oddBlockSize,
+      delta
+    );
+    cv.imwrite("./thresh.png", thresh);
+    return new Image(thresh.cols, thresh.rows, thresh.getData(), thresh.channels, img.pixelDensity);
+  }
+
+  public static async rescale(
+    img: Image,
+    scale: { x: number, y: number }
+  ): Promise<Image> {
+    let mat: cv.Mat;
+    if (img.hasAlphaChannel) {
+      mat = await ImageProcessor.fromImageWithAlphaChannel(img);
+    } else {
+      mat = await ImageProcessor.fromImageWithoutAlphaChannel(img);
+    }
+    const resized = await mat.resizeAsync(
+      mat.rows * scale.y,
+      mat.cols * scale.x,
+      scale.x,
+      scale.y,
+      cv.INTER_AREA
+    );
+    cv.imwrite("./scaled.png", resized);
+    return new Image(resized.cols, resized.rows, resized.getData(), resized.channels, {scaleX: 1.0, scaleY: 1.0});
+  }
 }
