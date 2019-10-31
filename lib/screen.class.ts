@@ -9,6 +9,7 @@ import { MatchResult } from "./match-result.class";
 import { OCRResult } from "./provider/ocr/ocr-result.interface";
 import { Region } from "./region.class";
 import { timeout } from "./util/poll-action.function";
+import { ImageProcessor } from "./provider/opencv/image-processor.class";
 
 export type FindHookCallback = (target: MatchResult) => Promise<void>;
 
@@ -64,7 +65,7 @@ export class Screen {
           reject(
             `No match for ${pathToNeedle}. Required: ${minMatch}, given: ${
               matchResult.confidence
-              }`,
+            }`,
           );
         }
       } catch (e) {
@@ -82,10 +83,21 @@ export class Screen {
     const minMatch = (params && params.confidence) || this.config.textConfidence;
     const searchRegion =
       (params && params.searchRegion) || await this.vision.screenSize();
+    const currentScreen = await this.vision.grabScreen();
     return new Promise<Region>(async (resolve, reject) => {
       try {
-        const currentScreen = await this.vision.grabScreen();
-        const findings = await this.vision.readWords(currentScreen);
+        // const inputImage = await ImageProcessor.threshold(
+        // const inputImage = await ImageProcessor.rescale(
+        const inputImage = await ImageProcessor.slice(
+          currentScreen,
+          searchRegion
+        );
+        // , {x: 2, y: 2});
+        // );
+        const findings = await this.vision.readWords(
+          inputImage
+        );
+        console.log(findings);
         const filteredResults = findings
           .filter(finding => finding.confidence >= minMatch)
           .filter(finding => finding.text.indexOf(searchText) > -1)
@@ -106,8 +118,14 @@ export class Screen {
   ) {
     return new Promise<string>(async (resolve, reject) => {
       try {
-        const currentScreen = await this.vision.grabScreenRegion(target);
-        const text = await this.vision.readText(currentScreen);
+        const currentScreen = await this.vision.grabScreen();
+        const inputImage = await ImageProcessor.slice(
+          currentScreen,
+          target
+        );
+        const text = await this.vision.readText(
+          inputImage
+        );
         if (!text || text.length === 0) {
           reject(`Failed to extract text from ${target}`);
         } else {
