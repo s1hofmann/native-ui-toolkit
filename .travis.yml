@@ -1,5 +1,22 @@
 cache: npm
 
+os:
+  - osx
+  - linux
+
+osx_image:
+  - xcode11
+
+dist: bionic
+
+language: node_js
+
+node_js:
+  - lts/dubnium
+  - lts/erbium
+  - 11
+  - 12.13.0
+
 addons:
   sonarcloud:
     organization: "nut-tree"
@@ -9,42 +26,51 @@ addons:
 services:
   - docker
 
-matrix:
-  include:
-    - name: "Linux Node 10"
-      os: linux
-      dist: xenial
-      env: NODE_VERSION=10
-    - name: "Linux Node 11"
-      os: linux
-      dist: xenial
-      env: NODE_VERSION=11
-    - name: "Linux Node 12"
-      os: linux
-      dist: xenial
-      env: NODE_VERSION=12
-    - name: "macOS Node 10"
-      os: osx
-      osx_image: xcode11
-      language: node_js
-      node_js: "10"
-    - name: "macOS Node 11"
-      os: osx
-      osx_image: xcode11
-      language: node_js
-      node_js: "11"
-    - name: "macOS Node 12"
-      os: osx
-      osx_image: xcode11
-      language: node_js
-      node_js: "12"
-
 before_install:
   - "bash ./.build/setup_${TRAVIS_OS_NAME}.sh"
 install: true
-
 script:
   - "bash ./.build/run_${TRAVIS_OS_NAME}.sh"
 
-after_success:
-  - sonar-scanner
+stages:
+  - sonar
+  - test
+  - name: deploy
+    if: (branch = develop) OR (tag IS present)
+
+jobs:
+  exclude:
+    - stage: test
+      node_js: 12.13.0
+      os: linux
+    - stage: test
+      node_js: lts/erbium
+      os: linux
+
+  include:
+    - stage: sonar
+      os: linux
+      dist: bionic
+      node_js: lts/erbium
+      after_success:
+        - sonar-scanner
+    - stage: deploy
+      os: osx
+      osx_image: xcode11
+      language: node_js
+      node_js: lts/erbium
+      install: true
+      script: true
+      before_deploy:
+        - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
+      deploy:
+        - provider: script
+          skip_cleanup: false
+          script: bash ./.build/pre-release.sh
+          on:
+            branch: develop
+        - provider: script
+          skip_cleanup: false
+          script: npm publish
+          on:
+            tags: true

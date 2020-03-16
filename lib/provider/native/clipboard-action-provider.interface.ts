@@ -1,38 +1,32 @@
 /**
  * A ClipboardActionProvider should allow access to the system clipboard
- *
- * @interface ClipboardActionProvider
  */
 export interface ClipboardActionProvider {
   /**
    * hasText should return whether the system clipboard currently holds text or not
    *
-   * @returns {Promise<boolean>} True if there's text on the clipboard, false otherwise
-   * @memberof ClipboardActionProvider
+   * @returns True if there's text on the clipboard, false otherwise
    */
   hasText(): Promise<boolean>;
 
   /**
    * clear should allow to clear the system clipboard
    *
-   * @returns {Promise<boolean>} Successfully cleared or not
-   * @memberof ClipboardActionProvider
+   * @returns True when successfully cleared, false otherwise
    */
   clear(): Promise<boolean>;
 
   /**
-   * copy should allow to copy text to the system's clipboard
+   * copy should allow to copy text to the systems clipboard
    *
-   * @param {string} text The text to copy to the clipboard
-   * @memberof ClipboardActionProvider
+   * @param text The text to copy to the clipboard
    */
   copy(text: string): Promise<void>;
 
   /**
-   * paste should allow to paste the current text on the system's clipboard
+   * paste should allow to paste the current text on the systems clipboard
    *
-   * @returns {Promise<string>} The current clipboard text
-   * @memberof ClipboardActionProvider
+   * @returns The current clipboard text
    */
   paste(): Promise<string>;
 }

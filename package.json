@@ -1,6 +1,6 @@
 {
   "name": "@nut-tree/nut-js",
-  "version": "1.3.0",
+  "version": "1.3.2",
   "license": "Apache-2.0",
   "main": "dist/index",
   "typings": "dist/index",
@@ -50,24 +50,26 @@
     "coverage": "jest --coverage",
     "lint": "tslint -p tsconfig.json",
     "watch": "tsc -w -p .",
-    "prepublishOnly": "npm run compile && npm test",
-    "versionBump": "bump --tag --push --all"
+    "publish-next": "npm publish --tag next",
+    "prepublishOnly": "npm run compile",
+    "versionBump": "bump --tag --push --all",
+    "typedoc": "typedoc --options ./typedoc.js --out ./docs lib/"
   },
   "dependencies": {
+    "@nut-tree/libnut": "1.0.2",
     "clipboardy": "2.0.0",
     "opencv4nodejs-prebuilt": "5.3.0",
-    "@nut-tree/libnut": "1.0.2",
     "tesseract.js": "1.0.19"
   },
   "devDependencies": {
-    "@types/clipboardy": "^1.1.0",
-    "@types/jest": "^24.0.9",
-    "@types/node": "^12.0.10",
-    "jest": "^24.7.1",
-    "sneer": "^1.0.1",
-    "ts-jest": "^24.0.2",
-    "tslint": "^5.16.0",
-    "typescript": "^3.4.3",
-    "version-bump-prompt": "^5.0.1"
+    "@types/clipboardy": "2.0.1",
+    "@types/jest": "25.1.4",
+    "jest": "25.1.0",
+    "sneer": "1.0.1",
+    "ts-jest": "25.2.1",
+    "tslint": "6.1.0",
+    "typescript": "3.8.3",
+    "typedoc": "0.16.11",
+    "version-bump-prompt": "6.0.2"
   }
 }

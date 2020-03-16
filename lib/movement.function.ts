@@ -1,8 +1,9 @@
 import { NativeAdapter } from "./adapter/native.adapter.class";
+import { MovementApi } from "./movement-api.interface";
 import { Point } from "./point.class";
 import { LineHelper } from "./util/linehelper.class";
 
-export const createMovementApi = (native: NativeAdapter, lineHelper: LineHelper) => {
+export const createMovementApi = (native: NativeAdapter, lineHelper: LineHelper): MovementApi => {
   return ({
     down: async (px: number): Promise<Point[]> => {
       const pos = await native.currentMousePosition();

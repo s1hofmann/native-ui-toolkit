@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.3.2
+
+- Enhancement: Revisit mouse speed settings [(#85)](https://github.com/nut-tree/nut.js/issues/85)
+
+## 1.3.1
+
+- Bugfix: Wrong result size for scaled image search [(#68)](https://github.com/nut-tree/nut.js/issues/68)
+- Enhancement: Switch from robotjs to libnut [(#86)](https://github.com/nut-tree/nut.js/issues/86)
+- Enhancement: Update to OpenCV4 [(#89)](https://github.com/nut-tree/nut.js/issues/89)
+- Enhancement: Enable matrix builds [(#13)](https://github.com/nut-tree/nut.js/issues/13)
+
 ## 1.3.0
 
 - Enhancement: Enabled prebuilt bindings for OpenCV [(#77)](https://github.com/nut-tree/nut.js/issues/77)

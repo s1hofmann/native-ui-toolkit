@@ -1,23 +1,13 @@
 import { linear } from "./movementtype.function";
 
 describe("MovementType", () => {
-  it("should return a set of linear timesteps, one millisecond per step.", () => {
-    const expected = [1, 1, 1, 1, 1, 1];
+  it("should return a set of linear timesteps, 1000000 nanosecond per step.", () => {
+    const expected = [1000000, 1000000, 1000000, 1000000, 1000000, 1000000];
     expect(linear(6, 1000)).toEqual(expected);
   });
 
-  it("should threshold movement speed to one pixel per millisecond in case of faster movement.", () => {
-    const expected = [1, 1, 1, 1, 1, 1];
-    expect(linear(6, 2000)).toEqual(expected);
-  });
-
-  it("should should return a set of linear timesteps, two milliseconds per step.", () => {
-    const expected = [2, 2, 2, 2, 2, 2];
+  it("should should return a set of linear timesteps, 2000000 nanoseconds per step.", () => {
+    const expected = [2000000, 2000000, 2000000, 2000000, 2000000, 2000000];
     expect(linear(6, 500)).toEqual(expected);
-  });
-
-  it("should floor movement to three milliseconds per step.", () => {
-    const expected = [3, 3, 3, 3, 3, 3];
-    expect(linear(6, 300)).toEqual(expected);
   });
 });

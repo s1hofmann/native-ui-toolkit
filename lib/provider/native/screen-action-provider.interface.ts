@@ -8,44 +8,39 @@ import { Region } from "../../region.class";
  */
 export interface ScreenActionProvider {
   /**
-   * grabScreen should return an Image object containing a screenshot data of a system's
+   * grabScreen should return an {@link Image} object containing a screenshot data of a systems
    * main screen as well as its dimensions
    *
-   * @returns {Promise<Image>} The Image object holding screenshot data
-   * @memberof ScreenActionProvider
+   * @returns The {@link Image} object holding screenshot data
    */
   grabScreen(): Promise<Image>;
 
   /**
    * Returns the same result as grabScreen, but limited to a specified region
    *
-   * @param {Region} region The region to take the screenshot of
-   * @returns {Promise<Image>} The Image object holding screenshot data
-   * @memberof ScreenActionProvider
+   * @param region The {@link Region} to take the screenshot of
+   * @returns The {@link Image} object holding screenshot data
    */
   grabScreenRegion(region: Region): Promise<Image>;
 
   /**
-   * screenWidth returns a system's main screen width
+   * screenWidth returns a systems main screen width
    *
-   * @returns {Promise<number>} The screen width
-   * @memberof ScreenActionProvider
+   * @returns The screen width
    */
   screenWidth(): Promise<number>;
 
   /**
-   * screenHeight returns a system's main screen height
+   * screenHeight returns a systems main screen height
    *
-   * @returns {Promise<number>} The screen height
-   * @memberof ScreenActionProvider
+   * @returns The screen height
    */
   screenHeight(): Promise<number>;
 
   /**
-   * screenSize returns a Region object the size of a system's main screen
+   * screenSize returns a {@link Region} object the size of a systems main screen
    *
-   * @returns {Promise<Region>} The Region object
-   * @memberof ScreenActionProvider
+   * @returns The {@link Region} object representing the screen dimensions
    */
   screenSize(): Promise<Region>;
 }

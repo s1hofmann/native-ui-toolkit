@@ -1,3 +1,6 @@
+/**
+ * The {@link Key} enum represents keys of a standard 105 key US layout keyboard
+ */
 export enum Key {
   Space,
   Escape,

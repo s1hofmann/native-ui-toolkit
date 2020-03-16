@@ -1,0 +1,519 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@nut-tree/nut-js</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@nut-tree/nut-js</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@nut-tree/nut-js</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#nutjs-native-ui-toolkit-a-hrefhttpstravis-cicomnut-treenutjsimg-srchttpstravis-cicomnut-treenutjssvgbranchmaster-altbuild-statusa-a-hrefhttpssonarcloudiodashboardidnut-tree3anutjsimg-srchttpssonarcloudioapiproject_badgesmeasureprojectnut-tree3anutjsmetricalert_status-altsonarcloud-badgea-a-hrefhttpssonarcloudiocomponent_measuresidnut-tree3anutjsampmetriccoverageimg-srchttpssonarcloudioapiproject_badgesmeasureprojectnut-tree3anutjsmetriccoverage-altsonarcloud-coveragea" id="nutjs-native-ui-toolkit-a-hrefhttpstravis-cicomnut-treenutjsimg-srchttpstravis-cicomnut-treenutjssvgbranchmaster-altbuild-statusa-a-hrefhttpssonarcloudiodashboardidnut-tree3anutjsimg-srchttpssonarcloudioapiproject_badgesmeasureprojectnut-tree3anutjsmetricalert_status-altsonarcloud-badgea-a-hrefhttpssonarcloudiocomponent_measuresidnut-tree3anutjsampmetriccoverageimg-srchttpssonarcloudioapiproject_badgesmeasureprojectnut-tree3anutjsmetriccoverage-altsonarcloud-coveragea" style="color: inherit; text-decoration: none;">
+					<h1>nut.js (Native UI Toolkit) <a href="https://travis-ci.com/nut-tree/nut.js"><img src="https://travis-ci.com/nut-tree/nut.js.svg?branch=master" alt="Build Status"></a> <a href="https://sonarcloud.io/dashboard?id=nut-tree%3Anut.js"><img src="https://sonarcloud.io/api/project_badges/measure?project=nut-tree%3Anut.js&metric=alert_status" alt="SonarCloud badge"></a> <a href="https://sonarcloud.io/component_measures?id=nut-tree%3Anut.js&amp;metric=coverage"><img src="https://sonarcloud.io/api/project_badges/measure?project=nut-tree%3Anut.js&metric=coverage" alt="SonarCloud Coverage"></a></h1>
+				</a>
+				<p align="center">
+					Native UI testing / automation with node.js
+				</p>
+				<br/>
+				<p align="center">
+					<a target="_blank" href="https://github.com/justadudewhohacks/opencv4nodejs">
+						<img src="https://img.shields.io/badge/Built_with-opencv4nodejs-C86414.svg?style=flat-square" alt="Built with opencv4nodejs" />
+				</p>
+				<a href="#about" id="about" style="color: inherit; text-decoration: none;">
+					<h1>About</h1>
+				</a>
+				<p align="center">
+					<img src="https://github.com/nut-tree/nut.js/raw/master/.gfx/nut.png" alt="logo" width="200"/>
+				</p>
+				<p><code>nut.js</code> is a cross-platform native UI testing tool.</p>
+				<p>It allows for native UI interactions via keyboard and / or mouse,
+				but additionally gives you the possibility to navigate the screen based on image matching.</p>
+				<a href="#sample" id="sample" style="color: inherit; text-decoration: none;">
+					<h1>Sample</h1>
+				</a>
+				<p>The following snippet shows a valid NUT example (on macOS)</p>
+				<pre><code class="language-js"><span class="hljs-meta">"use strict"</span>;
+
+<span class="hljs-keyword">const</span> { keyboard, Key, mouse, left, right, up, down } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@nut-tree/nut-js"</span>);
+
+<span class="hljs-keyword">const</span> square = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">await</span> mouse.move(right(<span class="hljs-number">500</span>));
+  <span class="hljs-keyword">await</span> mouse.move(down(<span class="hljs-number">500</span>));
+  <span class="hljs-keyword">await</span> mouse.move(left(<span class="hljs-number">500</span>));
+  <span class="hljs-keyword">await</span> mouse.move(up(<span class="hljs-number">500</span>));
+};
+
+<span class="hljs-keyword">const</span> openSpotlight = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">await</span> keyboard.pressKey(Key.LeftSuper);
+  <span class="hljs-keyword">await</span> keyboard.pressKey(Key.Space);
+  <span class="hljs-keyword">await</span> keyboard.releaseKey(Key.Space);
+  <span class="hljs-keyword">await</span> keyboard.releaseKey(Key.LeftSuper);
+};
+
+describe(<span class="hljs-string">"Basic test"</span>, () =&gt; {
+  it(<span class="hljs-string">"Should run a simple test"</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">await</span> square();
+    <span class="hljs-keyword">await</span> openSpotlight();
+    <span class="hljs-keyword">await</span> keyboard.type(<span class="hljs-string">"calculator"</span>);
+    <span class="hljs-keyword">await</span> keyboard.type(Key.Return);
+  });
+});
+</code></pre>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h1>Installation</h1>
+				</a>
+				<p><code>nut.js</code> comes with a pre-built version of OpenCV for your respective target platform.
+				In order to use these pre-compiled bindings, certain runtime conditions have to be met.</p>
+				<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
+					<h2>Prerequisites</h2>
+				</a>
+				<p>This section lists runtime requirements for <code>nut.js</code> on the respective target platform.</p>
+				<a href="#windows" id="windows" style="color: inherit; text-decoration: none;">
+					<h4>Windows</h4>
+				</a>
+				<p>In order to install <code>nut.js</code> on Windows, please make sure to have the <a href="https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads">Microsoft Visual C++ Redistributable</a> installed.</p>
+				<a href="#macos" id="macos" style="color: inherit; text-decoration: none;">
+					<h4>macOS</h4>
+				</a>
+				<p>On macOS, Xcode command line tools are required.
+				You can install them by running</p>
+				<pre><code class="language-bash">xcode-select --install</code></pre>
+				<a href="#linux" id="linux" style="color: inherit; text-decoration: none;">
+					<h4>Linux</h4>
+				</a>
+				<p>Depending on your distribution, Linux setups may differ.</p>
+				<p>In general, <code>nut.js</code> requires</p>
+				<ul>
+					<li>libXtst</li>
+				</ul>
+				<p>Installation on <code>*buntu</code> distributions:</p>
+				<pre><code class="language-bash">sudo apt-get install libxtst-dev</code></pre>
+				<p>Setups on other distributions might differ.</p>
+				<a href="#manual-build" id="manual-build" style="color: inherit; text-decoration: none;">
+					<h2>Manual build</h2>
+				</a>
+				<p>As a fallback, <code>nut.js</code> is able to build all required dependencies by itself.
+				To do so, some setup is required on the respective target platform.</p>
+				<a href="#windows-1" id="windows-1" style="color: inherit; text-decoration: none;">
+					<h4>Windows</h4>
+				</a>
+				<p>In order to install <code>nut.js</code> on Windows, <a href="https://www.microsoft.com/en-us/download/details.aspx?id=48159">Windows Build Tools</a> and <a href="https://www.python.org/downloads/windows/">Python 2</a> are required.
+				You can either set them up manually, or install them via npm:</p>
+				<pre><code class="language-bash">npm install --global windows-build-tools</code></pre>
+				<p>or</p>
+				<pre><code class="language-bash">yarn global add windows-build-tools</code></pre>
+				<a href="#macos-1" id="macos-1" style="color: inherit; text-decoration: none;">
+					<h4>macOS</h4>
+				</a>
+				<p>On macOS, Xcode command line tools are required.
+				You can install them by running</p>
+				<pre><code class="language-bash">xcode-select --install</code></pre>
+				<a href="#linux-1" id="linux-1" style="color: inherit; text-decoration: none;">
+					<h4>Linux</h4>
+				</a>
+				<p>Depending on your distribution, Linux setups may differ.</p>
+				<p>In general, <code>nut.js</code> requires</p>
+				<ul>
+					<li>Python 2</li>
+					<li>g++</li>
+					<li>make</li>
+					<li>libXtst</li>
+					<li>libPng</li>
+				</ul>
+				<p>Installation on <code>*buntu</code> distributions:</p>
+				<pre><code class="language-bash">sudo apt-get install build-essential python libxtst-dev libpng++-dev</code></pre>
+				<p>Setups on other distributions might differ.</p>
+				<p>For reference, please see:</p>
+				<ul>
+					<li><a href="https://github.com/justadudewhohacks/opencv4nodejs#how-to-install">opencv4nodejs</a></li>
+					<li><a href="http://robotjs.io/docs/building">robotjs</a></li>
+				</ul>
+				<a href="#install-codenutjscode" id="install-codenutjscode" style="color: inherit; text-decoration: none;">
+					<h2>Install <code>nut.js</code></h2>
+				</a>
+				<p>Running </p>
+				<pre><code class="language-bash">npm i @nut-tree/nut-js</code></pre>
+				<p>or</p>
+				<pre><code class="language-bash">yarn add @nut-tree/nut-js</code></pre>
+				<p>will install nut.js and its required dependencies.</p>
+				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+					<h1>Examples</h1>
+				</a>
+				<p><a href="https://github.com/nut-tree/trailmix">nut-tree/trailmix</a> contains a set of ready to use examples which demo the usage ot nut.js.</p>
+				<a href="#modules" id="modules" style="color: inherit; text-decoration: none;">
+					<h1>Modules</h1>
+				</a>
+				<p>This list gives an overview on currently implemented and planned functionality.
+				It&#39;s work in progress and will undergo constant modification.</p>
+				<a href="#clipboard" id="clipboard" style="color: inherit; text-decoration: none;">
+					<h2>Clipboard</h2>
+				</a>
+				<ul>
+					<li><input checked="" disabled="" type="checkbox"> Copy text to clipboard</li>
+					<li><input checked="" disabled="" type="checkbox"> Paste text from clipboard</li>
+				</ul>
+				<a href="#keyboard" id="keyboard" style="color: inherit; text-decoration: none;">
+					<h2>Keyboard</h2>
+				</a>
+				<ul>
+					<li><input checked="" disabled="" type="checkbox"> Support for standard US keyboard layout</li>
+					<li><input checked="" disabled="" type="checkbox"> Support for German special characters</li>
+				</ul>
+				<a href="#mouse" id="mouse" style="color: inherit; text-decoration: none;">
+					<h2>Mouse</h2>
+				</a>
+				<ul>
+					<li><input checked="" disabled="" type="checkbox"> Support for mouse movement</li>
+					<li><input checked="" disabled="" type="checkbox"> Support for mouse scroll</li>
+					<li><input checked="" disabled="" type="checkbox"> Configurable movement speed</li>
+					<li><input checked="" disabled="" type="checkbox"> Mouse drag</li>
+				</ul>
+				<a href="#process" id="process" style="color: inherit; text-decoration: none;">
+					<h2>Process</h2>
+				</a>
+				<ul>
+					<li><input disabled="" type="checkbox"> Retrieve the region of a process window</li>
+				</ul>
+				<a href="#screen" id="screen" style="color: inherit; text-decoration: none;">
+					<h2>Screen</h2>
+				</a>
+				<ul>
+					<li><input checked="" disabled="" type="checkbox"> findOnScreen</li>
+					<li><input checked="" disabled="" type="checkbox"> waitFor</li>
+					<li><input checked="" disabled="" type="checkbox"> Hooks to trigger actions based on images</li>
+				</ul>
+				<a href="#integration" id="integration" style="color: inherit; text-decoration: none;">
+					<h2>Integration</h2>
+				</a>
+				<ul>
+					<li><input checked="" disabled="" type="checkbox"> Jest</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/__global.html">__global</a>
+					</li>
+					<li class=" tsd-kind-module tsd-parent-kind-module">
+						<a href="modules/__global.jest.html">__global.jest</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/button.html" class="tsd-kind-icon">Button</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/filetype.html" class="tsd-kind-icon">File<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/key.html" class="tsd-kind-icon">Key</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/assert.html" class="tsd-kind-icon">Assert</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/bresenham.html" class="tsd-kind-icon">Bresenham</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/clipboard.html" class="tsd-kind-icon">Clipboard</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/clipboardaction.html" class="tsd-kind-icon">Clipboard<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/image.html" class="tsd-kind-icon">Image</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/imageprocessor.html" class="tsd-kind-icon">Image<wbr>Processor</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/imagereader.html" class="tsd-kind-icon">Image<wbr>Reader</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/imagewriter.html" class="tsd-kind-icon">Image<wbr>Writer</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/keyboard.html" class="tsd-kind-icon">Keyboard</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/keyboardaction.html" class="tsd-kind-icon">Keyboard<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/linehelper.html" class="tsd-kind-icon">Line<wbr>Helper</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/locationparameters.html" class="tsd-kind-icon">Location<wbr>Parameters</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/matchrequest.html" class="tsd-kind-icon">Match<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/matchresult.html" class="tsd-kind-icon">Match<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/mouse.html" class="tsd-kind-icon">Mouse</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/mouseaction.html" class="tsd-kind-icon">Mouse<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/nativeadapter.html" class="tsd-kind-icon">Native<wbr>Adapter</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/point.html" class="tsd-kind-icon">Point</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/region.html" class="tsd-kind-icon">Region</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/scaledmatchresult.html" class="tsd-kind-icon">Scaled<wbr>Match<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/screen.html" class="tsd-kind-icon">Screen</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/screenaction.html" class="tsd-kind-icon">Screen<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/templatematchingfinder.html" class="tsd-kind-icon">Template<wbr>Matching<wbr>Finder</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/visionadapter.html" class="tsd-kind-icon">Vision<wbr>Adapter</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/clipboardactionprovider.html" class="tsd-kind-icon">Clipboard<wbr>Action<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/datasink.html" class="tsd-kind-icon">Data<wbr>Sink</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/datasource.html" class="tsd-kind-icon">Data<wbr>Source</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/finderinterface.html" class="tsd-kind-icon">Finder<wbr>Interface</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/keyboardactionprovider.html" class="tsd-kind-icon">Keyboard<wbr>Action<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/mouseactioninterface.html" class="tsd-kind-icon">Mouse<wbr>Action<wbr>Interface</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/movementapi.html" class="tsd-kind-icon">Movement<wbr>Api</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/screenactionprovider.html" class="tsd-kind-icon">Screen<wbr>Action<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#findhookcallback" class="tsd-kind-icon">Find<wbr>Hook<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#stringorkey" class="tsd-kind-icon">String<wbr>OrKey</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#robot" class="tsd-kind-icon">robot</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#busywaitfornanoseconds" class="tsd-kind-icon">busy<wbr>Wait<wbr>For<wbr>Nano<wbr>Seconds</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#centerof" class="tsd-kind-icon">center<wbr>Of</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createmovementapi" class="tsd-kind-icon">create<wbr>Movement<wbr>Api</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#debugimage" class="tsd-kind-icon">debug<wbr>Image</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#determineroi" class="tsd-kind-icon">determineROI</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#determinescaledsearchregion" class="tsd-kind-icon">determine<wbr>Scaled<wbr>Search<wbr>Region</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#findedges" class="tsd-kind-icon">find<wbr>Edges</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#generateoutputpath" class="tsd-kind-icon">generate<wbr>Output<wbr>Path</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#inputisstring" class="tsd-kind-icon">input<wbr>IsString</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isvalidsearch" class="tsd-kind-icon">is<wbr>Valid<wbr>Search</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#linear" class="tsd-kind-icon">linear</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#loadhaystack" class="tsd-kind-icon">load<wbr>Haystack</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#loadneedle" class="tsd-kind-icon">load<wbr>Needle</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#lowerbound" class="tsd-kind-icon">lower<wbr>Bound</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#matchimages" class="tsd-kind-icon">match<wbr>Images</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#randompointin" class="tsd-kind-icon">random<wbr>Point<wbr>In</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#scaleimage" class="tsd-kind-icon">scale<wbr>Image</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#scalelocation" class="tsd-kind-icon">scale<wbr>Location</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#sleep" class="tsd-kind-icon">sleep</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#timeout" class="tsd-kind-icon">timeout</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#tobeat" class="tsd-kind-icon">to<wbr>BeAt</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#tobein" class="tsd-kind-icon">to<wbr>BeIn</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#toshow" class="tsd-kind-icon">to<wbr>Show</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#upperbound" class="tsd-kind-icon">upper<wbr>Bound</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#jestmatchers" class="tsd-kind-icon">jest<wbr>Matchers</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
