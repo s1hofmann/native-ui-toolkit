@@ -1,4 +1,4 @@
-import robot = require("@nut-tree/libnut");
+import libnut = require("@nut-tree/libnut");
 import { Button } from "../../button.enum";
 import { Point } from "../../point.class";
 import { MouseActionProvider } from "./mouse-action-provider.interface";
@@ -16,13 +16,13 @@ export class MouseAction implements MouseActionProvider {
   }
 
   public setMouseDelay(delay: number): void {
-    robot.setMouseDelay(delay);
+    libnut.setMouseDelay(delay);
   }
 
   public setMousePosition(p: Point): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.moveMouse(p.x, p.y);
+        libnut.moveMouse(p.x, p.y);
         resolve();
       } catch (e) {
         reject(e);
@@ -33,7 +33,7 @@ export class MouseAction implements MouseActionProvider {
   public currentMousePosition(): Promise<Point> {
     return new Promise<Point>(((resolve, reject) => {
       try {
-        const position = robot.getMousePos();
+        const position = libnut.getMousePos();
         resolve(new Point(position.x, position.y));
       } catch (e) {
         reject(e);
@@ -44,7 +44,7 @@ export class MouseAction implements MouseActionProvider {
   public leftClick(): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.mouseClick(MouseAction.buttonLookup(Button.LEFT));
+        libnut.mouseClick(MouseAction.buttonLookup(Button.LEFT));
         resolve();
       } catch (e) {
         reject(e);
@@ -55,7 +55,7 @@ export class MouseAction implements MouseActionProvider {
   public rightClick(): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.mouseClick(MouseAction.buttonLookup(Button.RIGHT));
+        libnut.mouseClick(MouseAction.buttonLookup(Button.RIGHT));
         resolve();
       } catch (e) {
         reject(e);
@@ -66,7 +66,7 @@ export class MouseAction implements MouseActionProvider {
   public middleClick(): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.mouseClick(MouseAction.buttonLookup(Button.MIDDLE));
+        libnut.mouseClick(MouseAction.buttonLookup(Button.MIDDLE));
         resolve();
       } catch (e) {
         reject(e);
@@ -77,7 +77,7 @@ export class MouseAction implements MouseActionProvider {
   public pressButton(btn: Button): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.mouseToggle("down", MouseAction.buttonLookup(btn));
+        libnut.mouseToggle("down", MouseAction.buttonLookup(btn));
         resolve();
       } catch (e) {
         reject(e);
@@ -88,7 +88,7 @@ export class MouseAction implements MouseActionProvider {
   public releaseButton(btn: Button): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.mouseToggle("up", MouseAction.buttonLookup(btn));
+        libnut.mouseToggle("up", MouseAction.buttonLookup(btn));
         resolve();
       } catch (e) {
         reject(e);
@@ -99,7 +99,7 @@ export class MouseAction implements MouseActionProvider {
   public scrollUp(amount: number): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.scrollMouse(0, amount);
+        libnut.scrollMouse(0, amount);
         resolve();
       } catch (e) {
         reject(e);
@@ -110,7 +110,7 @@ export class MouseAction implements MouseActionProvider {
   public scrollDown(amount: number): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.scrollMouse(0, -amount);
+        libnut.scrollMouse(0, -amount);
         resolve();
       } catch (e) {
         reject(e);
@@ -121,7 +121,7 @@ export class MouseAction implements MouseActionProvider {
   public scrollLeft(amount: number): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.scrollMouse(-amount, 0);
+        libnut.scrollMouse(-amount, 0);
         resolve();
       } catch (e) {
         reject(e);
@@ -132,7 +132,7 @@ export class MouseAction implements MouseActionProvider {
   public scrollRight(amount: number): Promise<void> {
     return new Promise<void>(((resolve, reject) => {
       try {
-        robot.scrollMouse(amount, 0);
+        libnut.scrollMouse(amount, 0);
         resolve();
       } catch (e) {
         reject(e);

@@ -20,7 +20,6 @@ describe("poll-action", () => {
 
         // THEN
         expect((end - start)).toBeGreaterThanOrEqual(maxDuration);
-        expect(action).toBeCalledTimes((maxDuration / updateInterval));
     });
 
     it("should timeout after maxDuration if action resolve != true", async () => {
@@ -42,7 +41,6 @@ describe("poll-action", () => {
 
         // THEN
         expect((end - start)).toBeGreaterThanOrEqual(maxDuration);
-        expect(action).toBeCalledTimes((maxDuration / updateInterval));
     });
 
     it("should resolve after updateInterval if action resolves", async () => {
@@ -93,12 +91,12 @@ describe("poll-action", () => {
         });
 
         // WHEN
-        await timeout(updateInterval, maxDuration, action);
+        const result = await timeout(updateInterval, maxDuration, action);
         const end = Date.now();
 
         // THEN
         expect((end - start)).toBeGreaterThanOrEqual(delay);
-        expect(action).toBeCalledTimes(4);
+        expect(result).toBeTruthy();
     });
 
     it("should fail after timeout if timeout < retry interval", async () => {

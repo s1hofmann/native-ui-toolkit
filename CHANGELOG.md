@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.4.0
+
+- Enhancement: API docs [(#87)](https://github.com/nut-tree/nut.js/issues/87)
+- Enhancement: Improve CI pipeline [(#110)](https://github.com/nut-tree/nut.js/issues/110)
+- Enhancement: Rename `MouseActionInterface` [(#112)](https://github.com/nut-tree/nut.js/issues/112)
+- Enhancement: Enhance test stability [(#109)](https://github.com/nut-tree/nut.js/issues/109)
+- Enhancement: Config cleanup [(#117)](https://github.com/nut-tree/nut.js/issues/117)
+- Enhancement: Improve error message when failing to locate images [(#101)](https://github.com/nut-tree/nut.js/issues/101)
+- Enhancement: Support for node 13 and 14 [(#119)](https://github.com/nut-tree/nut.js/issues/119)
+- Enhancement: Support for Electron [(#121)](https://github.com/nut-tree/nut.js/issues/121)
+- Enhancement: Native highlight [(#40)](https://github.com/nut-tree/nut.js/issues/40)
+
 ## 1.3.2
 
 - Enhancement: Revisit mouse speed settings [(#85)](https://github.com/nut-tree/nut.js/issues/85)

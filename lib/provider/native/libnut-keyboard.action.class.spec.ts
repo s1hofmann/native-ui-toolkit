@@ -1,6 +1,6 @@
-import robot = require("@nut-tree/libnut");
+import libnut = require("@nut-tree/libnut");
 import { Key } from "../../key.enum";
-import { KeyboardAction } from "./robotjs-keyboard-action.class";
+import { KeyboardAction } from "./libnut-keyboard-action.class";
 
 jest.mock("@nut-tree/libnut");
 
@@ -8,9 +8,9 @@ beforeEach(() => {
   jest.resetAllMocks();
 });
 
-describe("robotjs keyboard action", () => {
+describe("libnut keyboard action", () => {
   describe("click", () => {
-    it("should forward the keyTap call to robotjs for a known key", () => {
+    it("should forward the keyTap call to libnut for a known key", () => {
       // GIVEN
       const SUT = new KeyboardAction();
 
@@ -18,13 +18,13 @@ describe("robotjs keyboard action", () => {
       SUT.click(Key.A);
 
       // THEN
-      expect(robot.keyTap).toBeCalledTimes(1);
+      expect(libnut.keyTap).toBeCalledTimes(1);
     });
 
-    it("should reject on robotjs errors", async () => {
+    it("should reject on libnut errors", async () => {
       // GIVEN
       const SUT = new KeyboardAction();
-      robot.keyTap = jest.fn(() => {
+      libnut.keyTap = jest.fn(() => {
         throw new Error("Test error");
       });
 
@@ -34,7 +34,7 @@ describe("robotjs keyboard action", () => {
       expect(SUT.click(Key.A)).rejects.toThrowError("Test error");
     });
 
-    it("should not forward the keyTap call to robotjs for an unknown key", () => {
+    it("should not forward the keyTap call to libnut for an unknown key", () => {
       // GIVEN
       const SUT = new KeyboardAction();
 
@@ -42,12 +42,12 @@ describe("robotjs keyboard action", () => {
       SUT.click(Key.Add);
 
       // THEN
-      expect(robot.keyTap).not.toBeCalled();
+      expect(libnut.keyTap).not.toBeCalled();
     });
   });
 
   describe("type", () => {
-    it("should forward the type call to robotjs", () => {
+    it("should forward the type call to libnut", () => {
       // GIVEN
       const SUT = new KeyboardAction();
       const payload = "testInput";
@@ -56,14 +56,14 @@ describe("robotjs keyboard action", () => {
       SUT.type(payload);
 
       // THEN
-      expect(robot.typeString).toBeCalledTimes(1);
-      expect(robot.typeString).toBeCalledWith(payload);
+      expect(libnut.typeString).toBeCalledTimes(1);
+      expect(libnut.typeString).toBeCalledWith(payload);
     });
 
-    it("should reject on robotjs errors", async () => {
+    it("should reject on libnut errors", async () => {
       // GIVEN
       const SUT = new KeyboardAction();
-      robot.typeString = jest.fn(() => {
+      libnut.typeString = jest.fn(() => {
         throw new Error("Test error");
       });
 
@@ -75,7 +75,7 @@ describe("robotjs keyboard action", () => {
   });
 
   describe("pressKey", () => {
-    it("should forward the pressKey call to robotjs for a known key", () => {
+    it("should forward the pressKey call to libnut for a known key", () => {
       // GIVEN
       const SUT = new KeyboardAction();
 
@@ -83,8 +83,8 @@ describe("robotjs keyboard action", () => {
       SUT.pressKey(Key.A);
 
       // THEN
-      expect(robot.keyToggle).toBeCalledTimes(1);
-      expect(robot.keyToggle).toBeCalledWith(KeyboardAction.keyLookup(Key.A), "down", []);
+      expect(libnut.keyToggle).toBeCalledTimes(1);
+      expect(libnut.keyToggle).toBeCalledWith(KeyboardAction.keyLookup(Key.A), "down", []);
     });
 
     it("should treat a list of keys as modifiers + the actual key to press", () => {
@@ -95,12 +95,12 @@ describe("robotjs keyboard action", () => {
       SUT.pressKey(Key.LeftControl, Key.A);
 
       // THEN
-      expect(robot.keyToggle).toBeCalledTimes(1);
-      expect(robot.keyToggle)
+      expect(libnut.keyToggle).toBeCalledTimes(1);
+      expect(libnut.keyToggle)
         .toBeCalledWith(KeyboardAction.keyLookup(Key.A), "down", [KeyboardAction.keyLookup(Key.LeftControl)]);
     });
 
-    it("should not forward the pressKey call to robotjs for an unknown key", () => {
+    it("should not forward the pressKey call to libnut for an unknown key", () => {
       // GIVEN
       const SUT = new KeyboardAction();
 
@@ -108,13 +108,13 @@ describe("robotjs keyboard action", () => {
       SUT.pressKey(Key.Add);
 
       // THEN
-      expect(robot.keyToggle).not.toBeCalled();
+      expect(libnut.keyToggle).not.toBeCalled();
     });
 
-    it("should reject on robotjs errors", async () => {
+    it("should reject on libnut errors", async () => {
       // GIVEN
       const SUT = new KeyboardAction();
-      robot.keyToggle = jest.fn(() => {
+      libnut.keyToggle = jest.fn(() => {
         throw new Error("Test error");
       });
 
@@ -126,7 +126,7 @@ describe("robotjs keyboard action", () => {
   });
 
   describe("releaseKey", () => {
-    it("should forward the releaseKey call to robotjs for a known key", () => {
+    it("should forward the releaseKey call to libnut for a known key", () => {
       // GIVEN
       const SUT = new KeyboardAction();
 
@@ -134,8 +134,8 @@ describe("robotjs keyboard action", () => {
       SUT.releaseKey(Key.A);
 
       // THEN
-      expect(robot.keyToggle).toBeCalledTimes(1);
-      expect(robot.keyToggle).toBeCalledWith(KeyboardAction.keyLookup(Key.A), "up", []);
+      expect(libnut.keyToggle).toBeCalledTimes(1);
+      expect(libnut.keyToggle).toBeCalledWith(KeyboardAction.keyLookup(Key.A), "up", []);
     });
 
     it("should treat a list of keys as modifiers + the actual key to release", () => {
@@ -146,12 +146,12 @@ describe("robotjs keyboard action", () => {
       SUT.releaseKey(Key.LeftControl, Key.A);
 
       // THEN
-      expect(robot.keyToggle).toBeCalledTimes(1);
-      expect(robot.keyToggle)
+      expect(libnut.keyToggle).toBeCalledTimes(1);
+      expect(libnut.keyToggle)
         .toBeCalledWith(KeyboardAction.keyLookup(Key.A), "up", [KeyboardAction.keyLookup(Key.LeftControl)]);
     });
 
-    it("should not forward the releaseKey call to robotjs for an unknown key", () => {
+    it("should not forward the releaseKey call to libnut for an unknown key", () => {
       // GIVEN
       const SUT = new KeyboardAction();
 
@@ -159,13 +159,13 @@ describe("robotjs keyboard action", () => {
       SUT.releaseKey(Key.Add);
 
       // THEN
-      expect(robot.keyToggle).not.toBeCalled();
+      expect(libnut.keyToggle).not.toBeCalled();
     });
 
-    it("should reject on robotjs errors", async () => {
+    it("should reject on libnut errors", async () => {
       // GIVEN
       const SUT = new KeyboardAction();
-      robot.keyToggle = jest.fn(() => {
+      libnut.keyToggle = jest.fn(() => {
         throw new Error("Test error");
       });
 

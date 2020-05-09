@@ -1,23 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2018",
     "module": "commonjs",
     "lib": [
       "es6"
     ],
-    "typeRoots": ["./node_modules/@types/", "./types/"],
     "outDir": "./dist",
     "declaration": true,
-
+    "declarationMap": true,
+    "sourceMap": true,
     "strict": true,
-    "alwaysStrict": true,
-
+    "noImplicitAny": true,
     "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noImplicitReturns": true,
 
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
   },
   "include": [
     "lib/**/*.ts",

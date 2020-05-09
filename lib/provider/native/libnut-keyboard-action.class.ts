@@ -1,4 +1,4 @@
-import robot = require("@nut-tree/libnut");
+import libnut = require("@nut-tree/libnut");
 import { Key } from "../../key.enum";
 import { KeyboardActionProvider } from "./keyboard-action-provider.interface";
 
@@ -135,7 +135,7 @@ export class KeyboardAction implements KeyboardActionProvider {
         const nativeKey = KeyboardAction.keyLookup(key);
         const modifierKeys = this.mapModifierKeys(...modifiers);
         if (nativeKey) {
-          robot.keyToggle(nativeKey, event, modifierKeys);
+          libnut.keyToggle(nativeKey, event, modifierKeys);
         }
         resolve();
       } catch (e) {
@@ -150,7 +150,7 @@ export class KeyboardAction implements KeyboardActionProvider {
   public type(input: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       try {
-        robot.typeString(input);
+        libnut.typeString(input);
         resolve();
       } catch (e) {
         reject(e);
@@ -166,7 +166,7 @@ export class KeyboardAction implements KeyboardActionProvider {
         const nativeKey = KeyboardAction.keyLookup(key);
         const modifierKeys = KeyboardAction.mapModifierKeys(...modifiers);
         if (nativeKey) {
-          robot.keyTap(nativeKey, modifierKeys);
+          libnut.keyTap(nativeKey, modifierKeys);
         }
         resolve();
       } catch (e) {
@@ -202,6 +202,6 @@ export class KeyboardAction implements KeyboardActionProvider {
   }
 
   public setKeyboardDelay(delay: number): void {
-    robot.setKeyboardDelay(delay);
+    libnut.setKeyboardDelay(delay);
   }
 }

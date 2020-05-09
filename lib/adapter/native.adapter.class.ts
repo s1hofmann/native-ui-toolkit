@@ -5,14 +5,8 @@ import { ClipboardActionProvider } from "../provider/native/clipboard-action-pro
 import { ClipboardAction } from "../provider/native/clipboardy-clipboard-action.class";
 import { KeyboardActionProvider } from "../provider/native/keyboard-action-provider.interface";
 import { MouseActionProvider } from "../provider/native/mouse-action-provider.interface";
-import { KeyboardAction } from "../provider/native/robotjs-keyboard-action.class";
-import { MouseAction } from "../provider/native/robotjs-mouse-action.class";
-
-export interface NativeAdapterConfig {
-  clipboard?: ClipboardActionProvider;
-  keyboard?: KeyboardActionProvider;
-  mouse?: MouseActionProvider;
-}
+import { KeyboardAction } from "../provider/native/libnut-keyboard-action.class";
+import { MouseAction } from "../provider/native/libnut-mouse-action.class";
 
 /**
  * {@link NativeAdapter} serves as an abstraction layer for all OS level interactions.
@@ -22,15 +16,17 @@ export interface NativeAdapterConfig {
  * All actions which involve the OS are bundled in this adapter.
  */
 export class NativeAdapter {
-  private clipboard: ClipboardActionProvider;
-  private keyboard: KeyboardActionProvider;
-  private mouse: MouseActionProvider;
-
-  constructor(config?: NativeAdapterConfig) {
-    this.clipboard = (config && config.clipboard) || new ClipboardAction();
-    this.keyboard = (config && config.keyboard) || new KeyboardAction();
-    this.mouse = (config && config.mouse) || new MouseAction();
-  }
+  /**
+   * {@link NativeAdapter} class constructor
+   * @param clipboard {@link ClipboardActionProvider} instance used to interact with a systems clipboard (Default: {@link ClipboardAction})
+   * @param keyboard {@link KeyboardActionProvider} instance used to interact with a systems keybaord (Default: {@link KeyboardAction})
+   * @param mouse {@link MouseActionProvider} instance used to interact with a systems mouse (Default: {@link MouseAction})
+   */
+  constructor(
+    private clipboard: ClipboardActionProvider = new ClipboardAction(),
+    private keyboard: KeyboardActionProvider = new KeyboardAction(),
+    private mouse: MouseActionProvider = new MouseAction(),
+  ) {}
 
   /**
    * {@link setMouseDelay} configures mouse speed for movement

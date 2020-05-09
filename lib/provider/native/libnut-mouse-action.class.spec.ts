@@ -1,7 +1,7 @@
-import robot = require("@nut-tree/libnut");
+import libnut = require("@nut-tree/libnut");
 import { Button } from "../../button.enum";
 import { Point } from "../../point.class";
-import { MouseAction } from "./robotjs-mouse-action.class";
+import { MouseAction } from "./libnut-mouse-action.class";
 
 jest.mock("@nut-tree/libnut");
 
@@ -9,9 +9,9 @@ beforeEach(() => {
   jest.resetAllMocks();
 });
 
-describe("robotjs mouse action", () => {
+describe("libnut mouse action", () => {
   describe("leftClick", () => {
-    it("should forward leftClick call to robotjs", () => {
+    it("should forward leftClick call to libnut", () => {
       // GIVEN
       const SUT = new MouseAction();
 
@@ -19,15 +19,15 @@ describe("robotjs mouse action", () => {
       SUT.leftClick();
 
       // THEN
-      expect(robot.mouseClick).toBeCalledTimes(1);
-      expect(robot.mouseClick).toBeCalledWith("left");
+      expect(libnut.mouseClick).toBeCalledTimes(1);
+      expect(libnut.mouseClick).toBeCalledWith("left");
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.mouseClick = jest.fn(() => {
+      libnut.mouseClick = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -39,7 +39,7 @@ describe("robotjs mouse action", () => {
   });
 
   describe("middleClick", () => {
-    it("should forward middleClick call to robotjs", () => {
+    it("should forward middleClick call to libnut", () => {
       // GIVEN
       const SUT = new MouseAction();
 
@@ -47,15 +47,15 @@ describe("robotjs mouse action", () => {
       SUT.middleClick();
 
       // THEN
-      expect(robot.mouseClick).toBeCalledTimes(1);
-      expect(robot.mouseClick).toBeCalledWith("middle");
+      expect(libnut.mouseClick).toBeCalledTimes(1);
+      expect(libnut.mouseClick).toBeCalledWith("middle");
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.mouseClick = jest.fn(() => {
+      libnut.mouseClick = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -67,7 +67,7 @@ describe("robotjs mouse action", () => {
   });
 
   describe("rightClick", () => {
-    it("should forward rightClick call to robotjs", () => {
+    it("should forward rightClick call to libnut", () => {
       // GIVEN
       const SUT = new MouseAction();
 
@@ -75,15 +75,15 @@ describe("robotjs mouse action", () => {
       SUT.rightClick();
 
       // THEN
-      expect(robot.mouseClick).toBeCalledTimes(1);
-      expect(robot.mouseClick).toBeCalledWith("right");
+      expect(libnut.mouseClick).toBeCalledTimes(1);
+      expect(libnut.mouseClick).toBeCalledWith("right");
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.mouseClick = jest.fn(() => {
+      libnut.mouseClick = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -95,7 +95,7 @@ describe("robotjs mouse action", () => {
   });
 
   describe("pressButton", () => {
-    it("should forward pressButton call to robotjs with state 'down'", () => {
+    it("should forward pressButton call to libnut with state 'down'", () => {
       // GIVEN
       const SUT = new MouseAction();
 
@@ -103,15 +103,15 @@ describe("robotjs mouse action", () => {
       SUT.pressButton(Button.LEFT);
 
       // THEN
-      expect(robot.mouseToggle).toBeCalledTimes(1);
-      expect(robot.mouseToggle).toBeCalledWith("down", expect.any(String));
+      expect(libnut.mouseToggle).toBeCalledTimes(1);
+      expect(libnut.mouseToggle).toBeCalledWith("down", expect.any(String));
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.mouseToggle = jest.fn(() => {
+      libnut.mouseToggle = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -123,7 +123,7 @@ describe("robotjs mouse action", () => {
   });
 
   describe("releaseButton", () => {
-    it("should forward pressButton call to robotjs with state 'up'", () => {
+    it("should forward pressButton call to libnut with state 'up'", () => {
       // GIVEN
       const SUT = new MouseAction();
 
@@ -131,15 +131,15 @@ describe("robotjs mouse action", () => {
       SUT.releaseButton(Button.LEFT);
 
       // THEN
-      expect(robot.mouseToggle).toBeCalledTimes(1);
-      expect(robot.mouseToggle).toBeCalledWith("up", expect.any(String));
+      expect(libnut.mouseToggle).toBeCalledTimes(1);
+      expect(libnut.mouseToggle).toBeCalledWith("up", expect.any(String));
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.mouseToggle = jest.fn(() => {
+      libnut.mouseToggle = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -151,7 +151,7 @@ describe("robotjs mouse action", () => {
   });
 
   describe("scrollUp", () => {
-    it("should forward scrollUp call to robotjs with positive y value", () => {
+    it("should forward scrollUp call to libnut with positive y value", () => {
       // GIVEN
       const SUT = new MouseAction();
       const scrollAmount = 5;
@@ -160,15 +160,15 @@ describe("robotjs mouse action", () => {
       SUT.scrollUp(scrollAmount);
 
       // THEN
-      expect(robot.scrollMouse).toBeCalledTimes(1);
-      expect(robot.scrollMouse).toBeCalledWith(0, scrollAmount);
+      expect(libnut.scrollMouse).toBeCalledTimes(1);
+      expect(libnut.scrollMouse).toBeCalledWith(0, scrollAmount);
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.scrollMouse = jest.fn(() => {
+      libnut.scrollMouse = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -180,7 +180,7 @@ describe("robotjs mouse action", () => {
   });
 
   describe("scrollDown", () => {
-    it("should forward scrollDown call to robotjs with negative y value", () => {
+    it("should forward scrollDown call to libnut with negative y value", () => {
       // GIVEN
       const SUT = new MouseAction();
       const scrollAmount = 5;
@@ -189,15 +189,15 @@ describe("robotjs mouse action", () => {
       SUT.scrollDown(scrollAmount);
 
       // THEN
-      expect(robot.scrollMouse).toBeCalledTimes(1);
-      expect(robot.scrollMouse).toBeCalledWith(0, -scrollAmount);
+      expect(libnut.scrollMouse).toBeCalledTimes(1);
+      expect(libnut.scrollMouse).toBeCalledWith(0, -scrollAmount);
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.scrollMouse = jest.fn(() => {
+      libnut.scrollMouse = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -209,7 +209,7 @@ describe("robotjs mouse action", () => {
   });
 
   describe("scrollLeft", () => {
-    it("should forward scrollLeft call to robotjs with negative x value", () => {
+    it("should forward scrollLeft call to libnut with negative x value", () => {
       // GIVEN
       const SUT = new MouseAction();
       const scrollAmount = 5;
@@ -218,15 +218,15 @@ describe("robotjs mouse action", () => {
       SUT.scrollLeft(scrollAmount);
 
       // THEN
-      expect(robot.scrollMouse).toBeCalledTimes(1);
-      expect(robot.scrollMouse).toBeCalledWith(-scrollAmount, 0);
+      expect(libnut.scrollMouse).toBeCalledTimes(1);
+      expect(libnut.scrollMouse).toBeCalledWith(-scrollAmount, 0);
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.scrollMouse = jest.fn(() => {
+      libnut.scrollMouse = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -238,7 +238,7 @@ describe("robotjs mouse action", () => {
   });
 
   describe("scrollRight", () => {
-    it("should forward scrollRight call to robotjs with negative x value", () => {
+    it("should forward scrollRight call to libnut with negative x value", () => {
       // GIVEN
       const SUT = new MouseAction();
       const scrollAmount = 5;
@@ -247,15 +247,15 @@ describe("robotjs mouse action", () => {
       SUT.scrollRight(scrollAmount);
 
       // THEN
-      expect(robot.scrollMouse).toBeCalledTimes(1);
-      expect(robot.scrollMouse).toBeCalledWith(scrollAmount, 0);
+      expect(libnut.scrollMouse).toBeCalledTimes(1);
+      expect(libnut.scrollMouse).toBeCalledWith(scrollAmount, 0);
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.scrollMouse = jest.fn(() => {
+      libnut.scrollMouse = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -267,9 +267,9 @@ describe("robotjs mouse action", () => {
   });
 
   describe("currentMousePosition", () => {
-    it("should return the current mouse position via robotjs", async () => {
+    it("should return the current mouse position via libnut", async () => {
       // GIVEN
-      robot.getMousePos = jest.fn(() => ({x: 10, y: 100}));
+      libnut.getMousePos = jest.fn(() => ({x: 10, y: 100}));
       const SUT = new MouseAction();
 
       // WHEN
@@ -280,11 +280,11 @@ describe("robotjs mouse action", () => {
       expect(currentPosition.y).toEqual(100);
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.getMousePos = jest.fn(() => {
+      libnut.getMousePos = jest.fn(() => {
         throw new Error(error);
       });
 
@@ -296,7 +296,7 @@ describe("robotjs mouse action", () => {
   });
 
   describe("setMousePosition", () => {
-    it("should set the current mouse position via robotjs", () => {
+    it("should set the current mouse position via libnut", () => {
       // GIVEN
       const SUT = new MouseAction();
 
@@ -304,15 +304,15 @@ describe("robotjs mouse action", () => {
       SUT.setMousePosition(new Point(10, 100));
 
       // THEN
-      expect(robot.moveMouse).toBeCalledTimes(1);
-      expect(robot.moveMouse).toBeCalledWith(10, 100);
+      expect(libnut.moveMouse).toBeCalledTimes(1);
+      expect(libnut.moveMouse).toBeCalledWith(10, 100);
     });
 
-    it("should reject on robotjs errors", () => {
+    it("should reject on libnut errors", () => {
       // GIVEN
       const SUT = new MouseAction();
       const error = "Test error";
-      robot.moveMouse = jest.fn(() => {
+      libnut.moveMouse = jest.fn(() => {
         throw new Error(error);
       });
 

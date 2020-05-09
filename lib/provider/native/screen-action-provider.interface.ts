@@ -24,6 +24,15 @@ export interface ScreenActionProvider {
   grabScreenRegion(region: Region): Promise<Image>;
 
   /**
+   * Highlights a screen {@link Region} for a given duration by overlaying it with an opaque window
+   *
+   * @param region The {@link Region} to highlight
+   * @param duration The highlight duration
+   * @param opacity Overlay opacity
+   */
+  highlightScreenRegion(region: Region, duration: number, opacity: number): Promise<void>;
+
+  /**
    * screenWidth returns a systems main screen width
    *
    * @returns The screen width

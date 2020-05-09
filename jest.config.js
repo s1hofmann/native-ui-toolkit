@@ -4,7 +4,6 @@ module.exports = {
     "lib/**/*.ts",
     "!lib/**/*.spec.ts",
     "!<rootDir>/node_modules/",
-    "!<rootDir>/path/to/dir/",
   ],
   preset: "ts-jest",
   testEnvironment: "node",

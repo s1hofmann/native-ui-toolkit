@@ -1,4 +1,4 @@
-import robot = require("@nut-tree/libnut");
+import libnut = require("@nut-tree/libnut");
 import { Image } from "../../image.class";
 import { Region } from "../../region.class";
 import { ScreenActionProvider } from "./screen-action-provider.interface";
@@ -7,7 +7,7 @@ export class ScreenAction implements ScreenActionProvider {
 
   private static determinePixelDensity(
     screen: Region,
-    screenShot: robot.Bitmap,
+    screenShot: libnut.Bitmap,
   ): { scaleX: number; scaleY: number } {
     return {
       scaleX: screenShot.width / screen.width,
@@ -20,9 +20,9 @@ export class ScreenAction implements ScreenActionProvider {
 
   public grabScreen(): Promise<Image> {
     return new Promise((resolve, reject) => {
-      const screenShot = robot.screen.capture();
+      const screenShot = libnut.screen.capture();
       if (screenShot) {
-        const screenSize = robot.getScreenSize();
+        const screenSize = libnut.getScreenSize();
         const pixelScaling = ScreenAction.determinePixelDensity(
           new Region(0, 0, screenSize.width, screenSize.height),
           screenShot,
@@ -44,7 +44,7 @@ export class ScreenAction implements ScreenActionProvider {
 
   public grabScreenRegion(region: Region): Promise<Image> {
     return new Promise((resolve, reject) => {
-      const screenShot = robot.screen.capture(
+      const screenShot = libnut.screen.capture(
         region.left,
         region.top,
         region.width,
@@ -67,10 +67,18 @@ export class ScreenAction implements ScreenActionProvider {
     });
   }
 
+  public highlightScreenRegion(region: Region, duration: number, opacity: number): Promise<void> {
+    return new Promise<void>((resolve) => {
+      libnut.screen.highlight(region.left, region.top, region.width, region.height, duration, opacity);
+      resolve();
+    });
+  }
+
+
   public screenWidth(): Promise<number> {
     return new Promise<number>((resolve, reject) => {
       try {
-        const size = robot.getScreenSize();
+        const size = libnut.getScreenSize();
         resolve(size.width);
       } catch (e) {
         reject(e);
@@ -81,7 +89,7 @@ export class ScreenAction implements ScreenActionProvider {
   public screenHeight(): Promise<number> {
     return new Promise<number>((resolve, reject) => {
       try {
-        const size = robot.getScreenSize();
+        const size = libnut.getScreenSize();
         resolve(size.height);
       } catch (e) {
         reject(e);
@@ -92,7 +100,7 @@ export class ScreenAction implements ScreenActionProvider {
   public screenSize(): Promise<Region> {
     return new Promise<Region>((resolve, reject) => {
       try {
-        const screenSize = robot.getScreenSize();
+        const screenSize = libnut.getScreenSize();
         resolve(new Region(0, 0, screenSize.width, screenSize.height));
       } catch (e) {
         reject(e);

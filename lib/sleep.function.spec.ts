@@ -1,5 +1,7 @@
 import {busyWaitForNanoSeconds, sleep} from "./sleep.function";
 
+const maxTimeDeltaInMs = 3;
+
 describe("sleep", () => {
     it("should resolve after x ms", async () => {
         // GIVEN
@@ -11,7 +13,7 @@ describe("sleep", () => {
         const after = Date.now();
 
         // THEN
-        expect(after - before).toBeGreaterThanOrEqual(timeout);
+        expect(after - before).toBeGreaterThanOrEqual(timeout - maxTimeDeltaInMs);
     });
 });
 
@@ -27,6 +29,6 @@ describe("busyWaitForNanoSeconds", () => {
         const after = Date.now();
 
         // THEN
-        expect(after - before).toBeGreaterThanOrEqual(timeoutMs);
+        expect(after - before).toBeGreaterThanOrEqual(timeoutMs - maxTimeDeltaInMs);
     });
 });

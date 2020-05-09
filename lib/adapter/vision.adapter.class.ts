@@ -1,7 +1,7 @@
 import { ImageMatchRequest } from "../image-match-request.class";
 import { Image } from "../image.class";
 import { MatchResult } from "../match-result.class";
-import { ScreenAction } from "../provider/native/robotjs-screen-action.class";
+import { ScreenAction } from "../provider/native/libnut-screen-action.class";
 import { ScreenActionProvider } from "../provider/native/screen-action-provider.interface";
 import { Language } from "../provider/ocr/language.enum";
 import { OCRResult } from "../provider/ocr/ocr-result.interface";
@@ -58,6 +58,17 @@ export class VisionAdapter {
    */
   public grabScreenRegion(region: Region): Promise<Image> {
     return this.screen.grabScreenRegion(region);
+  }
+
+  /**
+   * {@link highlightScreenRegion} highlights a screen {@link Region} for a given duration by overlaying it with an opaque window
+   *
+   * @param region The {@link Region} to highlight
+   * @param duration The highlight duration
+   * @param opacity Overlay opacity
+   */
+  public highlightScreenRegion(region: Region, duration: number, opacity: number): Promise<void> {
+    return this.screen.highlightScreenRegion(region, duration, opacity);
   }
 
   /**

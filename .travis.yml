@@ -13,9 +13,10 @@ language: node_js
 
 node_js:
   - lts/dubnium
-  - lts/erbium
   - 11
-  - 12.13.0
+  - lts/erbium
+  - 13
+  - 14
 
 addons:
   sonarcloud:
@@ -26,9 +27,8 @@ addons:
 services:
   - docker
 
-before_install:
+install:
   - "bash ./.build/setup_${TRAVIS_OS_NAME}.sh"
-install: true
 script:
   - "bash ./.build/run_${TRAVIS_OS_NAME}.sh"
 
@@ -40,9 +40,6 @@ stages:
 
 jobs:
   exclude:
-    - stage: test
-      node_js: 12.13.0
-      os: linux
     - stage: test
       node_js: lts/erbium
       os: linux
@@ -71,6 +68,6 @@ jobs:
             branch: develop
         - provider: script
           skip_cleanup: false
-          script: npm publish
+          script: npm ci && npm publish
           on:
             tags: true

@@ -1,11 +1,11 @@
-# nut.js (Native UI Toolkit) [![Build Status](https://travis-ci.com/nut-tree/nut.js.svg?branch=master)](https://travis-ci.com/nut-tree/nut.js) [![SonarCloud badge](https://sonarcloud.io/api/project_badges/measure?project=nut-tree%3Anut.js&metric=alert_status)](https://sonarcloud.io/dashboard?id=nut-tree%3Anut.js) [![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=nut-tree%3Anut.js&metric=coverage)](https://sonarcloud.io/component_measures?id=nut-tree%3Anut.js&metric=coverage)
+# nut.js (Native UI Toolkit) [![Build Status](https://travis-ci.com/nut-tree/nut.js.svg?branch=master)](https://travis-ci.com/nut-tree/nut.js) [![Build status](https://ci.appveyor.com/api/projects/status/iohwxc5t46gcuvby/branch/master?svg=true)](https://ci.appveyor.com/project/s1hofmann/nut-js/branch/master) [![SonarCloud badge](https://sonarcloud.io/api/project_badges/measure?project=nut-tree%3Anut.js&metric=alert_status)](https://sonarcloud.io/dashboard?id=nut-tree%3Anut.js) [![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=nut-tree%3Anut.js&metric=coverage)](https://sonarcloud.io/component_measures?id=nut-tree%3Anut.js&metric=coverage) [![Downloads per month](https://img.shields.io/npm/dm/@nut-tree/nut-js)](https://www.npmjs.com/package/@nut-tree/nut-js)
 <p align="center">
 Native UI testing / automation with node.js
 </p>
 <br/>
 <p align="center">
 	<a target="_blank" href="https://github.com/justadudewhohacks/opencv4nodejs">
-		<img src="https://img.shields.io/badge/Built_with-opencv4nodejs-C86414.svg?style=flat-square" alt="Built with opencv4nodejs" />
+		<img src="https://img.shields.io/badge/Built_with-opencv4nodejs-C86414.svg?style=flat-square" alt="Built with opencv4nodejs" /></a>
 </p>
 
 # About
@@ -14,19 +14,19 @@ Native UI testing / automation with node.js
     <img src="https://github.com/nut-tree/nut.js/raw/master/.gfx/nut.png" alt="logo" width="200"/>
 </p>
 
-`nut.js` is a cross-platform native UI testing tool.
+`nut.js` is a cross-platform native UI automation / testing tool.
 
 It allows for native UI interactions via keyboard and / or mouse,
 but additionally gives you the possibility to navigate the screen based on image matching.
 
 # Sample
 
-The following snippet shows a valid NUT example (on macOS)
+The following snippet shows a valid `nut.js` example (on macOS)
 
 ```js
 "use strict";
 
-const { keyboard, Key, mouse, left, right, up, down } = require("@nut-tree/nut-js");
+const { keyboard, Key, mouse, left, right, up, down, screen } = require("@nut-tree/nut-js");
 
 const square = async () => {
   await mouse.move(right(500));
@@ -61,6 +61,7 @@ In order to use these pre-compiled bindings, certain runtime conditions have to 
 ## Prerequisites
 
 This section lists runtime requirements for `nut.js` on the respective target platform.
+`nut.js` is built and tested against node 10 and later as well as Electron 4 and later, so in order to use `nut.js` please make sure to use one of these versions.
 
 #### Windows
 
@@ -155,8 +156,74 @@ or
 yarn add @nut-tree/nut-js
 ```
 
-will install nut.js and its required dependencies.
+will install `nut.js` and its required dependencies.
 
+### Snapshot releases
+
+`nut.js` also provides snapshot releases which allows to test upcoming features.
+
+Running 
+
+```bash
+npm i @nut-tree/nut-js@next
+```
+
+or
+
+```bash
+yarn add @nut-tree/nut-js@next
+```
+
+will install the most recent development release of `nut.js`.
+
+**Attention**: While snapshot releases are great to work with upcoming features before a new stable release, it is still a snapshot release.
+Please bear in mind that things might change and / or break on snapshot releases, so it is not recommended using them in production.
+
+### Usage with Electron
+
+`nut.js` in combination with Electron requires bindings built for use with Electron.
+`nut.js` does provide such bindings and e.g. [electron-rebuild](https://www.npmjs.com/package/electron-rebuild) makes installation a breeze.
+
+Besides installing `nut.js` via
+
+```bash
+npm i @nut-tree/nut-js
+```
+
+or
+
+```bash
+yarn add @nut-tree/nut-js
+```
+
+we also install `electron-rebuild` as a `devDependency`:
+
+```bash
+npm i -D electron-rebuild
+```
+
+or 
+
+```bash
+yarn add -D electron-rebuild
+```
+
+Next, we add a `rebuild` script to our `package.json`:
+
+```json
+{
+    ...
+    "scripts": {
+        ...
+        "start": "electron app.js",
+        "rebuild": "electron-rebuild"
+    },
+    ...,
+}
+```
+
+Now all we have to do is run `npm run rebuild` and `electron-rebuild` will fetch the appropriate bindings for our Electron version.
+Currently `nut.js` provides bindings for all ABI version to work with Electron v4.x up to 8.x
 
 # Examples
 
@@ -193,6 +260,7 @@ It's work in progress and will undergo constant modification.
 - [x] findOnScreen
 - [x] waitFor
 - [x] Hooks to trigger actions based on images
+- [x] Highlighting screen regions
 
 ## Integration
 

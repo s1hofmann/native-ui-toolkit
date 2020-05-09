@@ -1,6 +1,6 @@
 {
   "name": "@nut-tree/nut-js",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "license": "Apache-2.0",
   "main": "dist/index",
   "typings": "dist/index",
@@ -56,20 +56,19 @@
     "typedoc": "typedoc --options ./typedoc.js --out ./docs lib/"
   },
   "dependencies": {
-    "@nut-tree/libnut": "1.0.2",
+    "@nut-tree/libnut": "2.0.0",
     "clipboardy": "2.0.0",
-    "opencv4nodejs-prebuilt": "5.3.0",
-    "tesseract.js": "1.0.19"
+    "opencv4nodejs-prebuilt": "5.3.0-1"
   },
   "devDependencies": {
     "@types/clipboardy": "2.0.1",
     "@types/jest": "25.1.4",
     "jest": "25.1.0",
     "sneer": "1.0.1",
-    "ts-jest": "25.2.1",
+    "ts-jest": "25.4.0",
     "tslint": "6.1.0",
+    "typedoc": "0.17.6",
     "typescript": "3.8.3",
-    "typedoc": "0.16.11",
     "version-bump-prompt": "6.0.2"
   }
 }

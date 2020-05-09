@@ -1,6 +1,6 @@
-import robot = require("@nut-tree/libnut");
+import libnut = require("@nut-tree/libnut");
 import { Region } from "../../region.class";
-import { ScreenAction } from "./robotjs-screen-action.class";
+import { ScreenAction } from "./libnut-screen-action.class";
 
 jest.mock("@nut-tree/libnut");
 
@@ -11,7 +11,7 @@ beforeEach(() => {
 const screenSize = new Region(0, 0, 100, 100);
 const screenShotSize = new Region(0, 0, 200, 200);
 
-describe("robotjs screen action", () => {
+describe("libnut screen action", () => {
   describe("screen data", () => {
     it("should reject when no screenshot data is available", async () => {
       // GIVEN
@@ -22,13 +22,13 @@ describe("robotjs screen action", () => {
 
       // THEN
       await expect(call()).rejects.toEqual("Unable to fetch screen content.");
-      expect(robot.screen.capture).toBeCalledTimes(1);
+      expect(libnut.screen.capture).toBeCalledTimes(1);
     });
 
     it("should resolve when screenshot data is available", async () => {
       // GIVEN
       const SUT = new ScreenAction();
-      robot.screen.capture = jest.fn(() => ({
+      libnut.screen.capture = jest.fn(() => ({
           bitsPerPixel: 0,
           byteWidth: 0,
           bytesPerPixel: 0,
@@ -38,7 +38,7 @@ describe("robotjs screen action", () => {
           width: screenShotSize.width,
         })
       );
-      robot.getScreenSize = jest.fn(() => ({
+      libnut.getScreenSize = jest.fn(() => ({
           height: screenSize.height,
           width: screenSize.width,
         })
@@ -52,14 +52,14 @@ describe("robotjs screen action", () => {
       expect(image.height).toEqual(screenShotSize.height);
       expect(image.pixelDensity.scaleX).toEqual(2);
       expect(image.pixelDensity.scaleY).toEqual(2);
-      expect(robot.screen.capture).toBeCalledTimes(1);
+      expect(libnut.screen.capture).toBeCalledTimes(1);
     });
 
     it("should resolve when screenshot data of a screen region is available", async () => {
       // GIVEN
       const screenRegion = new Region(0, 0, 10, 10);
       const SUT = new ScreenAction();
-      robot.screen.capture = jest.fn(() => ({
+      libnut.screen.capture = jest.fn(() => ({
           bitsPerPixel: 0,
           byteWidth: 0,
           bytesPerPixel: 0,
@@ -78,7 +78,7 @@ describe("robotjs screen action", () => {
       expect(image.height).toEqual(screenShotSize.height);
       expect(image.pixelDensity.scaleX).toEqual(20);
       expect(image.pixelDensity.scaleY).toEqual(20);
-      expect(robot.screen.capture).toBeCalledTimes(1);
+      expect(libnut.screen.capture).toBeCalledTimes(1);
     });
 
     it("should reject when no screenshot of a screen region is available", async () => {
@@ -91,18 +91,18 @@ describe("robotjs screen action", () => {
 
       // THEN
       await expect(call(screenRegion)).rejects.toEqual("Unable to fetch screen content.");
-      expect(robot.screen.capture).toBeCalledTimes(1);
-      expect(robot.screen.capture)
+      expect(libnut.screen.capture).toBeCalledTimes(1);
+      expect(libnut.screen.capture)
         .toBeCalledWith(screenRegion.left, screenRegion.top, screenRegion.width, screenRegion.height);
     });
   });
 
   describe("screen size", () => {
     describe("screenWidth", () => {
-      it("should determine screen width via robotjs", async () => {
+      it("should determine screen width via libnut", async () => {
         // GIVEN
         const SUT = new ScreenAction();
-        robot.getScreenSize = jest.fn(() => ({width: screenSize.width, height: screenSize.height}));
+        libnut.getScreenSize = jest.fn(() => ({width: screenSize.width, height: screenSize.height}));
 
         // WHEN
         const width = await SUT.screenWidth();
@@ -111,11 +111,11 @@ describe("robotjs screen action", () => {
         expect(width).toEqual(screenSize.width);
       });
 
-      it("should reject on robotjs errors", async () => {
+      it("should reject on libnut errors", async () => {
         // GIVEN
         const SUT = new ScreenAction();
         const error = "Test error";
-        robot.getScreenSize = jest.fn(() => {
+        libnut.getScreenSize = jest.fn(() => {
           throw new Error(error);
         });
 
@@ -127,10 +127,10 @@ describe("robotjs screen action", () => {
     });
 
     describe("screenWidth", () => {
-      it("should determine screen height via robotjs", async () => {
+      it("should determine screen height via libnut", async () => {
         // GIVEN
         const SUT = new ScreenAction();
-        robot.getScreenSize = jest.fn(() => ({width: screenSize.width, height: screenSize.height}));
+        libnut.getScreenSize = jest.fn(() => ({width: screenSize.width, height: screenSize.height}));
 
         // WHEN
         const width = await SUT.screenHeight();
@@ -139,11 +139,11 @@ describe("robotjs screen action", () => {
         expect(width).toEqual(screenSize.height);
       });
 
-      it("should reject on robotjs errors", async () => {
+      it("should reject on libnut errors", async () => {
         // GIVEN
         const SUT = new ScreenAction();
         const error = "Test error";
-        robot.getScreenSize = jest.fn(() => {
+        libnut.getScreenSize = jest.fn(() => {
           throw new Error(error);
         });
 
@@ -155,10 +155,10 @@ describe("robotjs screen action", () => {
     });
 
     describe("screenWidth", () => {
-      it("should determine screen size via robotjs", async () => {
+      it("should determine screen size via libnut", async () => {
         // GIVEN
         const SUT = new ScreenAction();
-        robot.getScreenSize = jest.fn(() => ({width: screenSize.width, height: screenSize.height}));
+        libnut.getScreenSize = jest.fn(() => ({width: screenSize.width, height: screenSize.height}));
 
         // WHEN
         const size = await SUT.screenSize();
@@ -167,11 +167,47 @@ describe("robotjs screen action", () => {
         expect(size).toEqual(screenSize);
       });
 
-      it("should reject on robotjs errors", async () => {
+      it("should reject on libnut errors", async () => {
         // GIVEN
         const SUT = new ScreenAction();
         const error = "Test error";
-        robot.getScreenSize = jest.fn(() => {
+        libnut.getScreenSize = jest.fn(() => {
+          throw new Error(error);
+        });
+
+        // WHEN
+
+        // THEN
+        expect(SUT.screenSize()).rejects.toThrowError(error);
+      });
+    });
+
+    describe("highlight", () => {
+      it("should highlight a screen region via libnut", async () => {
+        // GIVEN
+        const SUT = new ScreenAction();
+        libnut.screen.highlight = jest.fn(() => {});
+        const x = 10;
+        const y = 20;
+        const w = 30;
+        const h = 40;
+        const testRegion = new Region(x, y, w, h);
+        const highlightDuration = 10;
+        const highlightOpacity = 1.0;
+
+        // WHEN
+        await SUT.highlightScreenRegion(testRegion, highlightDuration, highlightOpacity);
+
+        // THEN
+        expect(libnut.screen.highlight).toBeCalledTimes(1);
+        expect(libnut.screen.highlight).toBeCalledWith(x, y, w, h, highlightDuration, highlightOpacity);
+      });
+
+      it("should reject on libnut errors", async () => {
+        // GIVEN
+        const SUT = new ScreenAction();
+        const error = "Test error";
+        libnut.getScreenSize = jest.fn(() => {
           throw new Error(error);
         });
 

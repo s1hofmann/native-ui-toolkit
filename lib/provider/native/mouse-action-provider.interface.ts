@@ -4,7 +4,7 @@ import { Point } from "../../point.class";
 /**
  * A MouseActionProvider should provide access to a systems mouse input
  */
-export interface MouseActionInterface {
+export interface MouseActionProvider {
   /**
    * setMouseDelay should allow to configure mouse movement speed
    *

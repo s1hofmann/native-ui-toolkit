@@ -179,7 +179,13 @@ export class TemplateMatchingFinder implements FinderInterface {
         const potentialMatches = matches
           .filter(match => match.confidence >= matchRequest.confidence);
         if (potentialMatches.length === 0) {
-          reject(`Unable to locate ${matchRequest.pathToNeedle}, no match!`);
+          matches.sort((a, b) => a.confidence - b.confidence);
+          const bestMatch = matches.pop();
+          if (bestMatch) {
+            reject(`No match with required confidence ${matchRequest.confidence}. Best match: ${bestMatch.confidence} at ${bestMatch.location}`)
+          } else {
+            reject(`Unable to locate ${matchRequest.pathToNeedle}, no match!`);
+          }
         }
         resolve(potentialMatches[0]);
       } catch (e) {
