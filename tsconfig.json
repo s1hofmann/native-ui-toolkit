@@ -3,7 +3,8 @@
     "target": "ES2018",
     "module": "commonjs",
     "lib": [
-      "es6"
+      "es6",
+      "dom"
     ],
     "outDir": "./dist",
     "declaration": true,
