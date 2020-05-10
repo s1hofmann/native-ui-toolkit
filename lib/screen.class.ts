@@ -3,7 +3,7 @@ import {cwd} from "process";
 import {VisionAdapter} from "./adapter/vision.adapter.class";
 import {FileType} from "./file-type.enum";
 import {generateOutputPath} from "./generate-output-path.function";
-import {LocationParameters} from "./locationparameters.class";
+import {LocationParameters} from "./search-parameters.class";
 import {ImageMatchRequest} from "./match-request.class";
 import {MatchResult} from "./match-result.class";
 import {Region} from "./region.class";
@@ -82,9 +82,8 @@ export class Screen {
         templateImageFilename: string,
         params?: LocationParameters,
     ): Promise<Region> {
-        const minMatch = (params && params.confidence) || this.config.confidence;
-        const searchRegion =
-            (params && params.searchRegion) || await this.vision.screenSize();
+        const minMatch = params?.confidence ?? this.config.confidence;
+        const searchRegion = params?.searchRegion ?? await this.vision.screenSize();
 
         const fullPathToNeedle = normalize(join(this.config.resourceDirectory, templateImageFilename));
 

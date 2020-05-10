@@ -2,7 +2,7 @@ import {join} from "path";
 import {cwd} from "process";
 import {VisionAdapter} from "./adapter/vision.adapter.class";
 import {Image} from "./image.class";
-import {LocationParameters} from "./locationparameters.class";
+import {LocationParameters} from "./search-parameters.class";
 import {ImageMatchRequest} from "./match-request.class";
 import {MatchResult} from "./match-result.class";
 import {Region} from "./region.class";
