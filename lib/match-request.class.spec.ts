@@ -1,4 +1,4 @@
-import {ImageMatchRequest, TextMatchRequest} from "./match-request.class";
+import {ImageMatchRequest, isImageMatchRequest, isTextMatchRequest, TextMatchRequest} from "./match-request.class";
 import {Image} from "./image.class";
 import {Region} from "./region.class";
 
@@ -60,6 +60,94 @@ describe("MatchRequest", () => {
 
             // THEN
             expect(SUT.kind).toBe('match-text')
+        });
+    });
+
+    describe("isImageMatchRequest", () => {
+        it("should be true for kind 'match-image'", () => {
+            // GIVEN
+            const matchRequest = new ImageMatchRequest(
+                new Image(100, 100,
+                    new ArrayBuffer(0), 3
+                ),
+                "foo",
+                new Region(
+                    0,
+                    0,
+                    100,
+                    100),
+                0.99);
+
+            // WHEN
+            const result = isImageMatchRequest(matchRequest);
+
+            // THEN
+            expect(result).toBeTruthy();
+        });
+
+        it("should be false for kind 'match-text'", () => {
+            // GIVEN
+            const matchRequest = new TextMatchRequest(
+                new Image(100, 100,
+                    new ArrayBuffer(0), 3
+                ),
+                "foo",
+                new Region(
+                    0,
+                    0,
+                    100,
+                    100),
+                0.99);
+
+            // WHEN
+            const result = isImageMatchRequest(matchRequest);
+
+            // THEN
+            expect(result).toBeFalsy();
+        });
+    });
+
+    describe("isTextMatchRequest", () => {
+        it("should be false for kind 'match-image'", () => {
+            // GIVEN
+            const matchRequest = new ImageMatchRequest(
+                new Image(100, 100,
+                    new ArrayBuffer(0), 3
+                ),
+                "foo",
+                new Region(
+                    0,
+                    0,
+                    100,
+                    100),
+                0.99);
+
+            // WHEN
+            const result = isTextMatchRequest(matchRequest);
+
+            // THEN
+            expect(result).toBeFalsy();
+        });
+
+        it("should be true for kind 'match-text'", () => {
+            // GIVEN
+            const matchRequest = new TextMatchRequest(
+                new Image(100, 100,
+                    new ArrayBuffer(0), 3
+                ),
+                "foo",
+                new Region(
+                    0,
+                    0,
+                    100,
+                    100),
+                0.99);
+
+            // WHEN
+            const result = isTextMatchRequest(matchRequest);
+
+            // THEN
+            expect(result).toBeTruthy();
         });
     });
 });

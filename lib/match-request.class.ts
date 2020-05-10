@@ -36,3 +36,10 @@ export class TextMatchRequest extends MatchRequest {
         super();
     }
 }
+
+export const isImageMatchRequest = (x: any): x is ImageMatchRequest => {
+    return (x.kind && x.kind === "match-image");
+}
+export const isTextMatchRequest = (x: any): x is TextMatchRequest => {
+    return (x.kind && x.kind === "match-text");
+}
