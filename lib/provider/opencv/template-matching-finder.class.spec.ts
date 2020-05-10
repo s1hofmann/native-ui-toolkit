@@ -1,6 +1,6 @@
 import * as path from "path";
 import {Image} from "../../image.class";
-import {MatchRequest} from "../../match-request.class";
+import {ImageMatchRequest} from "../../match-request.class";
 import {Region} from "../../region.class";
 import {ImageReader} from "./image-reader.class";
 import {TemplateMatchingFinder} from "./template-matching-finder.class";
@@ -16,7 +16,7 @@ describe("Template-matching finder", () => {
         const needle = await imageLoader.load(needlePath);
         const minConfidence = 0.99;
         const searchRegion = new Region(0, 0, haystack.width, haystack.height);
-        const matchRequest = new MatchRequest(haystack, needlePath, searchRegion, minConfidence);
+        const matchRequest = new ImageMatchRequest(haystack, needlePath, searchRegion, minConfidence);
         const expectedResult = new Region(16, 31, needle.width, needle.height);
 
         // WHEN
@@ -37,7 +37,7 @@ describe("Template-matching finder", () => {
         const needle = await imageLoader.load(needlePath);
         const minConfidence = 0.99;
         const searchRegion = new Region(10, 20, 140, 100);
-        const matchRequest = new MatchRequest(haystack, needlePath, searchRegion, minConfidence);
+        const matchRequest = new ImageMatchRequest(haystack, needlePath, searchRegion, minConfidence);
         const expectedResult = new Region(6, 11, needle.width, needle.height);
 
         // WHEN
@@ -57,7 +57,7 @@ describe("Template-matching finder", () => {
         const haystack = await imageLoader.load(haystackPath);
         const minConfidence = 0.99;
         const searchRegion = new Region(0, 0, 320, 72);
-        const matchRequest = new MatchRequest(haystack, needlePath, searchRegion, minConfidence);
+        const matchRequest = new ImageMatchRequest(haystack, needlePath, searchRegion, minConfidence);
         const expectedRejection = new RegExp(`^No match with required confidence ${minConfidence}. Best match: \\d.\\d* at \\(\\d*, \\d*, \\d*, \\d*\\)$`)
 
         // WHEN
@@ -81,7 +81,7 @@ describe("Template-matching finder", () => {
         const minConfidence = 0.99;
         const searchRegion = new Region(0, 0, 100, 100);
         const haystack = new Image(needle.width, needle.height, needle.data, 3);
-        const matchRequest = new MatchRequest(haystack, pathToHaystack, searchRegion, minConfidence);
+        const matchRequest = new ImageMatchRequest(haystack, pathToHaystack, searchRegion, minConfidence);
 
         // WHEN
         const result = SUT.findMatch(matchRequest);

@@ -4,7 +4,7 @@ import {VisionAdapter} from "./adapter/vision.adapter.class";
 import {FileType} from "./file-type.enum";
 import {generateOutputPath} from "./generate-output-path.function";
 import {LocationParameters} from "./locationparameters.class";
-import {MatchRequest} from "./match-request.class";
+import {ImageMatchRequest} from "./match-request.class";
 import {MatchResult} from "./match-result.class";
 import {Region} from "./region.class";
 import {timeout} from "./util/poll-action.function";
@@ -90,7 +90,7 @@ export class Screen {
 
         const screenImage = await this.vision.grabScreen();
 
-        const matchRequest = new MatchRequest(
+        const matchRequest = new ImageMatchRequest(
             screenImage,
             fullPathToNeedle,
             searchRegion,

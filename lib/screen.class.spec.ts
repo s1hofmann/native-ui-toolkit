@@ -3,7 +3,7 @@ import {cwd} from "process";
 import {VisionAdapter} from "./adapter/vision.adapter.class";
 import {Image} from "./image.class";
 import {LocationParameters} from "./locationparameters.class";
-import {MatchRequest} from "./match-request.class";
+import {ImageMatchRequest} from "./match-request.class";
 import {MatchResult} from "./match-result.class";
 import {Region} from "./region.class";
 import {Screen} from "./screen.class";
@@ -36,7 +36,7 @@ describe("Screen.", () => {
         const SUT = new Screen(visionAdapterMock);
         const imagePath = "test/path/to/image.png";
         await expect(SUT.find(imagePath)).resolves.toEqual(matchResult.location);
-        const matchRequest = new MatchRequest(
+        const matchRequest = new ImageMatchRequest(
             expect.any(Image),
             join(cwd(), imagePath),
             searchRegion,
@@ -127,7 +127,7 @@ describe("Screen.", () => {
         const imagePath = "test/path/to/image.png";
         const parameters = new LocationParameters(undefined, minMatch);
         await expect(SUT.find(imagePath, parameters)).resolves.toEqual(matchResult.location);
-        const matchRequest = new MatchRequest(
+        const matchRequest = new ImageMatchRequest(
             expect.any(Image),
             join(cwd(), imagePath),
             searchRegion,
@@ -151,7 +151,7 @@ describe("Screen.", () => {
         const imagePath = "test/path/to/image.png";
         const parameters = new LocationParameters(customSearchRegion);
         await expect(SUT.find(imagePath, parameters)).resolves.toEqual(matchResult.location);
-        const matchRequest = new MatchRequest(
+        const matchRequest = new ImageMatchRequest(
             expect.any(Image),
             join(cwd(), imagePath),
             customSearchRegion,
@@ -176,7 +176,7 @@ describe("Screen.", () => {
         const imagePath = "test/path/to/image.png";
         const parameters = new LocationParameters(customSearchRegion, minMatch);
         await expect(SUT.find(imagePath, parameters)).resolves.toEqual(matchResult.location);
-        const matchRequest = new MatchRequest(
+        const matchRequest = new ImageMatchRequest(
             expect.any(Image),
             join(cwd(), imagePath),
             customSearchRegion,
