@@ -36,11 +36,13 @@ describe("Screen.", () => {
         const visionAdapterMock = new VisionAdapter();
 
         const SUT = new Screen(visionAdapterMock);
-        const imagePath = "test/path/to/image.png";
-        await expect(SUT.find(imagePath)).resolves.toEqual(matchResult.location);
+        const imageId = "test/path/to/image.png";
+        const imageData = Buffer.from([]);
+        await expect(SUT.findImage({ id: imageId, data: imageData })).resolves.toEqual(matchResult.location);
         const matchRequest = new MatchRequest(
             expect.any(Image),
-            join(cwd(), imagePath),
+            imageId,
+            imageData,
             searchRegion,
             SUT.config.confidence,
             true);
@@ -56,9 +58,10 @@ describe("Screen.", () => {
 
         const SUT = new Screen(visionAdapterMock);
         const testCallback = jest.fn(() => Promise.resolve());
-        const imagePath = "test/path/to/image.png";
-        SUT.on(imagePath, testCallback);
-        await SUT.find(imagePath);
+        const imageId = "test/path/to/image.png";
+        const imageData = Buffer.from([]);
+        SUT.on(imageId, testCallback);
+        await SUT.findImage({ id: imageId, data: imageData });
         expect(testCallback).toBeCalledTimes(1);
         expect(testCallback).toBeCalledWith(matchResult);
     });
@@ -73,10 +76,11 @@ describe("Screen.", () => {
         const SUT = new Screen(visionAdapterMock);
         const testCallback = jest.fn(() => Promise.resolve());
         const secondCallback = jest.fn(() => Promise.resolve());
-        const imagePath = "test/path/to/image.png";
-        SUT.on(imagePath, testCallback);
-        SUT.on(imagePath, secondCallback);
-        await SUT.find(imagePath);
+        const imageId = "test/path/to/image.png";
+        const imageData = Buffer.from([]);
+        SUT.on(imageId, testCallback);
+        SUT.on(imageId, secondCallback);
+        await SUT.findImage({ id: imageId, data: imageData });
         for (const callback of [testCallback, secondCallback]) {
             expect(callback).toBeCalledTimes(1);
             expect(callback).toBeCalledWith(matchResult);
@@ -93,10 +97,11 @@ describe("Screen.", () => {
         const visionAdapterMock = new VisionAdapter();
 
         const SUT = new Screen(visionAdapterMock);
-        const imagePath = "test/path/to/image.png";
-        await expect(SUT.find(imagePath))
+        const imageId = "test/path/to/image.png";
+        const imageData = Buffer.from([]);
+        await expect(SUT.findImage({ id: imageId, data: imageData }))
             .rejects
-            .toEqual(`No match for ${imagePath}. Required: ${SUT.config.confidence}, given: ${matchResult.confidence}`);
+            .toEqual(`No match for ${imageId}. Required: ${SUT.config.confidence}, given: ${matchResult.confidence}`);
     });
 
     it("should reject when search fails.", async () => {
@@ -108,10 +113,11 @@ describe("Screen.", () => {
         const visionAdapterMock = new VisionAdapter();
 
         const SUT = new Screen(visionAdapterMock);
-        const imagePath = "test/path/to/image.png";
-        await expect(SUT.find(imagePath))
+        const imageId = "test/path/to/image.png";
+        const imageData = Buffer.from([]);
+        await expect(SUT.findImage({ id: imageId, data: imageData }))
             .rejects
-            .toEqual(`Searching for ${imagePath} failed. Reason: '${rejectionReason}'`);
+            .toEqual(`Searching for ${imageId} failed. Reason: '${rejectionReason}'`);
     });
 
     it("should override default confidence value with parameter.", async () => {
@@ -126,12 +132,14 @@ describe("Screen.", () => {
 
         const SUT = new Screen(visionAdapterMock);
 
-        const imagePath = "test/path/to/image.png";
+        const imageId = "test/path/to/image.png";
+        const imageData = Buffer.from([]);
         const parameters = new LocationParameters(undefined, minMatch);
-        await expect(SUT.find(imagePath, parameters)).resolves.toEqual(matchResult.location);
+        await expect(SUT.findImage({ id: imageId, data: imageData }, parameters)).resolves.toEqual(matchResult.location);
         const matchRequest = new MatchRequest(
             expect.any(Image),
-            join(cwd(), imagePath),
+            imageId,
+            imageData,
             searchRegion,
             minMatch,
             true);
@@ -147,17 +155,19 @@ describe("Screen.", () => {
         });
         const visionAdapterMock = new VisionAdapter();
         const SUT = new Screen(visionAdapterMock);
-        const imagePath = "test/path/to/image.png";
+        const imageId = "test/path/to/image.png";
+        const imageData = Buffer.from([]);
         const parameters = new LocationParameters(customSearchRegion);
         const expectedMatchRequest = new MatchRequest(
           expect.any(Image),
-          join(cwd(), imagePath),
+          imageId,
+          imageData,
           customSearchRegion,
           SUT.config.confidence,
           true);
 
         // WHEN
-        await SUT.find(imagePath, parameters);
+        await SUT.findImage({ id: imageId, data: imageData }, parameters);
 
         // THEN
         expect(visionAdapterMock.findOnScreenRegion).toHaveBeenCalledWith(expectedMatchRequest);
@@ -171,17 +181,19 @@ describe("Screen.", () => {
         });
         const visionAdapterMock = new VisionAdapter();
         const SUT = new Screen(visionAdapterMock);
-        const imagePath = "test/path/to/image.png";
+        const imageId = "test/path/to/image.png";
+        const imageData = Buffer.from([]);
         const parameters = new LocationParameters(searchRegion, undefined, false);
         const expectedMatchRequest = new MatchRequest(
           expect.any(Image),
-          join(cwd(), imagePath),
+          imageId,
+          imageData,
           searchRegion,
           SUT.config.confidence,
           false);
 
         // WHEN
-        await SUT.find(imagePath, parameters);
+        await SUT.findImage({ id: imageId, data: imageData }, parameters);
 
         // THEN
         expect(visionAdapterMock.findOnScreenRegion).toHaveBeenCalledWith(expectedMatchRequest);
@@ -197,17 +209,19 @@ describe("Screen.", () => {
         });
         const visionAdapterMock = new VisionAdapter();
         const SUT = new Screen(visionAdapterMock);
-        const imagePath = "test/path/to/image.png";
+        const imageId = "test/path/to/image.png";
+        const imageData = Buffer.from([]);
         const parameters = new LocationParameters(customSearchRegion, minMatch);
         const expectedMatchRequest = new MatchRequest(
           expect.any(Image),
-          join(cwd(), imagePath),
+          imageId,
+          imageData,
           customSearchRegion,
           minMatch,
           true);
 
         // WHEN
-        await SUT.find(imagePath, parameters);
+        await SUT.findImage({ id: imageId, data: imageData }, parameters);
 
         // THEN
         expect(visionAdapterMock.findOnScreenRegion).toHaveBeenCalledWith(expectedMatchRequest);
@@ -261,8 +275,8 @@ describe("Screen.", () => {
         const SUT = new Screen(new VisionAdapter());
 
         // WHEN
-        const matchRegion = await SUT.find(
-            "test/path/to/image.png",
+        const matchRegion = await SUT.findImage(
+            { id: "test/path/to/image.png", data: Buffer.from([]) },
             {
                 searchRegion: limitedSearchRegion
             });

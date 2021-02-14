@@ -13,4 +13,15 @@ export class ImageReader implements DataSource {
       }
     });
   }
+  
+  public async decode(data: Buffer): Promise<Image> {
+    return new Promise<Image>(async (resolve, reject) => {
+      try {
+        const image = await cv.imdecode(data);
+        resolve(new Image(image.cols, image.rows, image.getData(), image.channels));
+      } catch (e) {
+        reject(`Failed to load image`);
+      }
+    });
+  }
 }

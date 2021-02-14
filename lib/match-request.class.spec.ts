@@ -9,6 +9,7 @@ describe("MatchRequest", () => {
         new ArrayBuffer(0), 3
       ),
       "foo",
+      Buffer.from([]),
       new Region(
         0,
         0,

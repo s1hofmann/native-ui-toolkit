@@ -100,6 +100,7 @@ describe("VisionAdapter class", () => {
     const request = new MatchRequest(
       new Image(100, 100, new ArrayBuffer(0), 3),
       "foo",
+      Buffer.from([]),
       new Region(0, 0, 100, 100),
       0.99,
       true);

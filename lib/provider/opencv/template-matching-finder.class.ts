@@ -85,16 +85,16 @@ export default class TemplateMatchingFinder implements FinderInterface {
     public async findMatches(matchRequest: MatchRequest, debug: boolean = false): Promise<ScaledMatchResult[]> {
         let needle: cv.Mat;
         try {
-            const needleInput = await this.source.load(matchRequest.pathToNeedle);
+            const needleInput = await this.source.decode(matchRequest.needleData);
             needle = await loadNeedle(needleInput);
         } catch (e) {
             throw new Error(
-                `Failed to load ${matchRequest.pathToNeedle}. Reason: '${e}'.`,
+                `Failed to load ${matchRequest.needleId}. Reason: '${e}'.`,
             );
         }
         if (!needle || needle.empty) {
             throw new Error(
-                `Failed to load ${matchRequest.pathToNeedle}, got empty image.`,
+                `Failed to load ${matchRequest.needleId}, got empty image.`,
             );
         }
         const haystack = await loadHaystack(matchRequest);
@@ -132,7 +132,6 @@ export default class TemplateMatchingFinder implements FinderInterface {
     }
 
     public async findMatch(matchRequest: MatchRequest, debug: boolean = false): Promise<MatchResult> {
-
         const matches = await this.findMatches(matchRequest, debug);
         const potentialMatches = matches
             .filter(match => match.confidence >= matchRequest.confidence);
@@ -146,7 +145,7 @@ export default class TemplateMatchingFinder implements FinderInterface {
                     throw new Error(`No match with required confidence ${matchRequest.confidence}. Best match: ${bestMatch.confidence} at ${bestMatch.location}`)
                 }
             } else {
-                throw new Error(`Unable to locate ${matchRequest.pathToNeedle}, no match!`);
+                throw new Error(`Unable to locate ${matchRequest.needleId}, no match!`);
             }
         }
         return potentialMatches[0];

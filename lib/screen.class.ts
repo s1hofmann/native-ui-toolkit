@@ -1,5 +1,6 @@
 import {join, normalize} from "path";
 import {cwd} from "process";
+import { promises as fs } from "fs";
 import {VisionAdapter} from "./adapter/vision.adapter.class";
 import {FileType} from "./file-type.enum";
 import {generateOutputPath} from "./generate-output-path.function";
@@ -83,18 +84,35 @@ export class Screen {
         templateImageFilename: string,
         params?: LocationParameters,
     ): Promise<Region> {
+        const fullPathToNeedle = normalize(join(this.config.resourceDirectory, templateImageFilename));
+
+        const data = await fs.readFile(fullPathToNeedle).catch(() => {
+            throw new Error(`Failed to load image from '${fullPathToNeedle}'`);
+        });
+
+        return this.findImage({ id: fullPathToNeedle, data }, params);
+    }
+
+        /**
+     * {@link find} will search for a template image on a systems main screen
+     * @param templateImage Filename of the template image, relative to {@link Screen.config.resourceDirectory}
+     * @param params {@link LocationParameters} which are used to fine tune search region and / or match confidence
+     */
+    public async findImage(
+        templateImage: { id: string, data: Buffer},
+        params?: LocationParameters,
+    ): Promise<Region> {
         const minMatch = (params && params.confidence) || this.config.confidence;
         const searchRegion =
             (params && params.searchRegion) || await this.vision.screenSize();
         const searchMultipleScales = (params && params.searchMultipleScales)
 
-        const fullPathToNeedle = normalize(join(this.config.resourceDirectory, templateImageFilename));
-
         const screenImage = await this.vision.grabScreen();
 
         const matchRequest = new MatchRequest(
             screenImage,
-            fullPathToNeedle,
+            templateImage.id,
+            templateImage.data,
             searchRegion,
             minMatch,
             searchMultipleScales
@@ -104,7 +122,7 @@ export class Screen {
             try {
                 const matchResult = await this.vision.findOnScreenRegion(matchRequest);
                 if (matchResult.confidence >= minMatch) {
-                    const possibleHooks = this.findHooks.get(templateImageFilename) || [];
+                    const possibleHooks = this.findHooks.get(templateImage.id) || [];
                     for (const hook of possibleHooks) {
                         await hook(matchResult);
                     }
@@ -121,14 +139,14 @@ export class Screen {
                     }
                 } else {
                     reject(
-                        `No match for ${templateImageFilename}. Required: ${minMatch}, given: ${
+                        `No match for ${templateImage.id}. Required: ${minMatch}, given: ${
                             matchResult.confidence
                         }`,
                     );
                 }
             } catch (e) {
                 reject(
-                    `Searching for ${templateImageFilename} failed. Reason: '${e}'`,
+                    `Searching for ${templateImage.id} failed. Reason: '${e}'`,
                 );
             }
         });

@@ -9,4 +9,5 @@ export interface DataSource {
    * @param path Absolute path to output file
    */
   load(path: string): Promise<any>;
+  decode(data: Buffer): Promise<any>;
 }

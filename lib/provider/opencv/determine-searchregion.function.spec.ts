@@ -13,13 +13,15 @@ describe("determineSearchRegion", () => {
         scaleY: 2.0
       }
     });
-    const needlePath = "/path/to/needle";
+    const needleId = "/path/to/needle";
+    const needleData = Buffer.from([]);
     const inputSearchRegion = new Region(0, 0, 100, 100);
     const expectedSearchRegion = new Region(0, 0, 150, 200);
 
     const matchRequest = new MatchRequest(
       imageMock,
-      needlePath,
+      needleId,
+      needleData,
       inputSearchRegion,
       0.99
     );
@@ -40,13 +42,15 @@ describe("determineSearchRegion", () => {
           scaleY
         }
       });
-      const needlePath = "/path/to/needle";
+      const needleId = "/path/to/needle";
+      const needleData = Buffer.from([]);
       const inputSearchRegion = new Region(0, 0, 100, 100);
       const expectedSearchRegion = new Region(0, 0, 100, 100);
 
       const matchRequest = new MatchRequest(
         imageMock,
-        needlePath,
+        needleId,
+        needleData,
         inputSearchRegion,
         0.99
       );

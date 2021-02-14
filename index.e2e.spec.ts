@@ -44,7 +44,7 @@ const close = async () => {
 describe("E2E screen test", () => {
   it("should throw on invalid images", async () => {
     jest.setTimeout(30000);
-    await expect(screen.find("mouse.png")).rejects.toContain("Failed to load image");
+    await expect(screen.find("mouse.png")).rejects.toHaveProperty("message", "Failed to load image from '/home/runner/work/nut.js/nut.js/mouse.png'");
   });
 });
 
